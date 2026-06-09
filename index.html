@@ -1,333 +1,587 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jenius Systems — a personal AI assistant that runs the day-to-day</title>
-<meta name="description" content="Jenius Systems is a private personal AI assistant — a small fleet of coordinated agents, reachable from one chat, that handle the calendar, health, meals, errands and a morning brief. A personal project, not a product." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jenius Systems — Architecture</title>
+<meta name="description" content="Jenius Systems — a private, self-hosted fleet of AI agents. Email, messaging, health, a shadow crypto-trader, a marketplace appraiser, a read-only calendar and a places concierge, all behind one hardened gateway.">
 
 <!-- Open Graph / social share -->
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Jenius Systems" />
-<meta property="og:description" content="A personal AI assistant — a small fleet of agents that runs the day-to-day, reachable from one chat. A personal project, not a product." />
+<meta property="og:title" content="Jenius Systems — Architecture" />
+<meta property="og:description" content="A private, self-hosted fleet of AI agents behind one hardened gateway. A personal project." />
 <meta property="og:url" content="https://jeniussystems.ai" />
 <meta property="og:image" content="https://jeniussystems.ai/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Jenius Systems" />
-<meta name="twitter:description" content="A personal AI assistant — a small fleet of agents that runs the day-to-day, reachable from one chat." />
+<meta name="twitter:title" content="Jenius Systems — Architecture" />
+<meta name="twitter:description" content="A private, self-hosted fleet of AI agents behind one hardened gateway." />
 <meta name="twitter:image" content="https://jeniussystems.ai/assets/og.png" />
 
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 <link rel="canonical" href="https://jeniussystems.ai/" />
 
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Parisienne&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Parisienne&display=swap" rel="stylesheet">
 
 <!-- Compiled Tailwind (static, zero runtime JS) -->
 <link rel="stylesheet" href="styles.css" />
 
 <style>
-  :root { --violet: #8b76e0; --teal: #1f6f6b; --blue: #2b4a8f; }
-  html, body { background: #050505; }
-  body { color: #e8e8ea; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body { background:#050505; color:#e8e8ea; font-family:'Plus Jakarta Sans',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
 
-  /* Ambient mesh orbs */
-  .mesh { position: fixed; inset: 0; z-index: 0; pointer-events: none; filter: blur(40px); }
-  .orb { position: absolute; border-radius: 9999px; }
-  .orb-1 { width: 55vw; height: 55vw; left: -12vw; top: -18vh; background: radial-gradient(circle at 30% 30%, #5b3fb0 0%, transparent 70%); opacity: 0.5; }
-  .orb-2 { width: 48vw; height: 48vw; right: -14vw; top: 24vh; background: radial-gradient(circle at 50% 50%, #1f6f6b 0%, transparent 70%); opacity: 0.42; }
-  .orb-3 { width: 42vw; height: 42vw; left: 18vw; bottom: -22vh; background: radial-gradient(circle at 50% 50%, #2b4a8f 0%, transparent 70%); opacity: 0.4; }
+  .mesh { position:fixed; inset:0; z-index:-2; pointer-events:none; overflow:hidden; }
+  .orb { position:absolute; border-radius:9999px; filter:blur(120px); }
+  .orb-1 { width:55vw; height:55vw; left:-12vw; top:-18vh; background:radial-gradient(circle at 30% 30%, #5b3fb0 0%, transparent 70%); opacity:0.5; }
+  .orb-2 { width:48vw; height:48vw; right:-14vw; top:24vh; background:radial-gradient(circle at 50% 50%, #1f6f6b 0%, transparent 70%); opacity:0.42; }
+  .orb-3 { width:42vw; height:42vw; left:18vw; bottom:-22vh; background:radial-gradient(circle at 50% 50%, #2b4a8f 0%, transparent 70%); opacity:0.4; }
 
-  /* Film grain */
-  .grain { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.5; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .grain { position:fixed; inset:0; z-index:50; pointer-events:none; opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
-  .glass { background: rgba(255,255,255,0.025); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
-  .hairline { border: 1px solid rgba(255,255,255,0.08); }
-  .grad-text { background: linear-gradient(180deg, #fff 0%, #b9b4d6 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .brand-j { font-family: 'Parisienne', cursive; font-weight: 400; padding-right: 0.04em; line-height: 1; color: #e7e3f6; }
-  ::selection { background: rgba(139,118,224,0.35); }
+  .hairline { border:1px solid rgba(255,255,255,0.08); }
+  .glass { background:rgba(255,255,255,0.025); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); }
+  .innercore { box-shadow: inset 0 1px 1px rgba(255,255,255,0.12); }
 
-  .icon-chip { color: #c9bdf2; }
-  .cta-primary { background: linear-gradient(135deg, rgba(139,118,224,0.28), rgba(43,74,143,0.22)); border: 1px solid rgba(139,118,224,0.45); }
-  .cta-primary:hover { background: linear-gradient(135deg, rgba(139,118,224,0.4), rgba(43,74,143,0.32)); }
-  .cta-secondary { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12); }
+  .reveal { opacity:0; transform:translateY(28px); filter:blur(6px); transition:opacity .9s cubic-bezier(0.32,0.72,0,1), transform .9s cubic-bezier(0.32,0.72,0,1), filter .9s cubic-bezier(0.32,0.72,0,1); will-change:transform,opacity; }
+  .reveal.in { opacity:1; transform:translateY(0); filter:blur(0); }
 
-  /* Scroll reveal */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
-  .reveal.in { opacity: 1; transform: none; }
+  .eyebrow { font-size:10px; letter-spacing:0.24em; text-transform:uppercase; }
+  .grad-text { background:linear-gradient(180deg,#fff 0%, #b9b4d6 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .brand-j { font-family:'Parisienne', cursive; font-weight:400; font-style:normal; padding-right:0.04em; line-height:1; -webkit-text-fill-color:#e7e3f6; color:#e7e3f6; }
+  .brand-hero { text-indent:0.22em; }
+  .brand-hero .brand-j { font-size:1.18em; display:inline-block; margin-right:0.04em; }
+  ::selection { background:rgba(139,118,224,0.35); }
 
+  .lane-link::after { content:""; position:absolute; left:50%; bottom:-26px; width:1px; height:26px; background:linear-gradient(180deg, rgba(255,255,255,0.25), transparent); }
+
+  @media (max-width:768px){ .orb{filter:blur(80px);} }
   @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1 !important; transform: none !important; transition: none; }
-    .animate-ping { animation: none !important; }
+    .reveal { opacity:1 !important; transform:none !important; filter:none !important; transition:none; }
+    .animate-ping { animation:none !important; }
   }
 </style>
 </head>
-
 <body class="font-sans antialiased">
+
 <div class="mesh"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
 <div class="grain"></div>
 
-<!-- NAV -->
+<!-- ===== Floating glass nav ===== -->
 <nav class="fixed inset-x-0 top-0 z-40 flex justify-center pt-5 px-4">
   <div class="glass hairline rounded-full px-2.5 py-2 flex items-center gap-1 shadow-[0_8px_40px_rgba(0,0,0,0.5)] w-full max-w-3xl">
     <a href="#top" class="flex items-center gap-2 pl-3 pr-4 py-1.5 font-display font-semibold tracking-tight text-sm whitespace-nowrap">
       <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
-      <span><span class="brand-j text-lg align-middle">J</span>enius&nbsp;Systems</span>
+      Jenius Systems
     </a>
     <div class="hidden md:flex items-center gap-1 ml-auto text-[13px] text-white/65">
-      <a href="#product" class="px-3.5 py-2 rounded-full hover:bg-white/5 hover:text-white transition-all duration-500 ease-spring">What it is</a>
-      <a href="#capabilities" class="px-3.5 py-2 rounded-full hover:bg-white/5 hover:text-white transition-all duration-500 ease-spring">What it does</a>
-      <a href="#different" class="px-3.5 py-2 rounded-full hover:bg-white/5 hover:text-white transition-all duration-500 ease-spring">How it's built</a>
-      <a href="#roadmap" class="px-3.5 py-2 rounded-full hover:bg-white/5 hover:text-white transition-all duration-500 ease-spring">What's coming</a>
+      <a href="#fleet" class="px-3.5 py-2 rounded-full hover:bg-white/5 hover:text-white transition-all duration-500">Fleet</a>
+      <a href="#topology" class="px-3.5 py-2 rounded-full hover:bg-white/5 hover:text-white transition-all duration-500">Topology</a>
+      <a href="#security" class="px-3.5 py-2 rounded-full hover:bg-white/5 hover:text-white transition-all duration-500">Security</a>
+      <a href="#roadmap" class="px-3.5 py-2 rounded-full hover:bg-white/5 hover:text-white transition-all duration-500">Roadmap</a>
     </div>
+    <span class="hidden md:inline-flex ml-auto mr-1 items-center gap-1.5 rounded-full bg-emerald-400/10 text-emerald-300 px-3 py-1.5 text-[11px] font-medium hairline border-emerald-400/20">Operational</span>
     <button id="navToggle" aria-label="Menu" class="md:hidden ml-auto mr-1 h-9 w-9 rounded-full bg-white/5 hairline grid place-items-center">
       <span class="relative block h-3.5 w-4">
-        <span id="ln1" class="absolute left-0 top-0 h-[1.5px] w-4 bg-white transition-all duration-500 ease-spring"></span>
-        <span id="ln2" class="absolute left-0 bottom-0 h-[1.5px] w-4 bg-white transition-all duration-500 ease-spring"></span>
+        <span id="ln1" class="absolute left-0 top-0 h-[1.5px] w-4 bg-white transition-all duration-500"></span>
+        <span id="ln2" class="absolute left-0 bottom-0 h-[1.5px] w-4 bg-white transition-all duration-500"></span>
       </span>
     </button>
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
+<!-- Mobile overlay -->
 <div id="mobileMenu" class="fixed inset-0 z-30 hidden flex-col items-center justify-center gap-7 bg-black/85 backdrop-blur-2xl text-2xl font-display">
-  <a href="#product" class="mob-link opacity-0 translate-y-6">What it is</a>
-  <a href="#capabilities" class="mob-link opacity-0 translate-y-6">What it does</a>
-  <a href="#different" class="mob-link opacity-0 translate-y-6">How it's built</a>
-  <a href="#roadmap" class="mob-link opacity-0 translate-y-6">What's coming</a>
+  <a href="#fleet" class="mob-link opacity-0 translate-y-6">Fleet</a>
+  <a href="#topology" class="mob-link opacity-0 translate-y-6">Topology</a>
+  <a href="#security" class="mob-link opacity-0 translate-y-6">Security</a>
+  <a href="#roadmap" class="mob-link opacity-0 translate-y-6">Roadmap</a>
 </div>
 
 <main id="top" class="relative z-10">
 
-  <!-- HERO -->
+  <!-- ===== HERO ===== -->
   <section class="min-h-[100dvh] flex flex-col justify-center max-w-6xl mx-auto px-6 md:px-10 pt-28 pb-20">
     <div class="reveal inline-flex w-max items-center gap-2 rounded-full glass hairline px-3 py-1.5 mb-8">
-      <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
-      <span class="text-[12.5px] text-white/70 tracking-wide">A personal AI assistant · built and running</span>
+      <span class="eyebrow text-white/70">Self-hosted · Multi-agent · Human-gated</span>
     </div>
-
-    <h1 class="reveal font-display font-extrabold tracking-tight leading-[1.02] text-5xl sm:text-6xl md:text-7xl max-w-4xl">
-      <span class="grad-text">A small fleet of AI agents</span><br />
-      <span class="grad-text">that runs the</span>
-      <span class="text-violet-300/90">day-to-day.</span>
+    <h1 class="reveal brand-hero font-display font-bold tracking-tight leading-[1.12] text-[clamp(2.6rem,9vw,7.5rem)] grad-text pb-4">
+      <span class="brand-j">j</span>enius Systems
     </h1>
-
-    <p class="reveal mt-8 text-lg md:text-xl text-white/65 max-w-2xl leading-relaxed">
-      Jenius Systems is my own personal assistant — a team of specialized AI agents that share memory and work together to handle the calendar, health, meals, errands and a morning brief. I reach the whole thing from one chat on my phone.
+    <p class="reveal mt-7 max-w-2xl text-lg md:text-2xl text-white/60 leading-relaxed font-light">
+      A private, self-hosted fleet of <span class="text-white font-normal">thirteen AI agents</span> — handling email, messaging, health, a shadow crypto-trader, a marketplace appraiser, a read-only calendar and a places concierge, all behind a single hardened gateway. A personal project, not a product.
     </p>
 
-    <div class="reveal mt-10 flex flex-wrap items-center gap-3">
-      <a href="#capabilities" class="cta-primary rounded-full px-6 py-3.5 font-medium text-sm tracking-wide transition-all duration-500 ease-spring">See what it does ↓</a>
-      <a href="#different" class="cta-secondary rounded-full px-6 py-3.5 font-medium text-sm tracking-wide text-white/80 hover:text-white transition-all duration-500 ease-spring">How it's built</a>
-    </div>
-
-    <!-- Proof: an example morning brief -->
-    <div class="reveal mt-16 max-w-md">
-      <p class="text-[11px] tracking-widest uppercase text-white/40 mb-3">An example morning brief</p>
-      <div class="glass hairline rounded-2xl p-5 shadow-[0_8px_40px_rgba(0,0,0,0.45)]">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="brand-j text-base">J</span>
-          <span class="text-sm font-semibold text-white/80">Jenius</span>
-          <span class="ml-auto text-[11px] text-white/35">7:02 AM</span>
+    <div class="reveal mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl">
+      <div class="glass hairline rounded-[1.4rem] p-1.5">
+        <div class="innercore rounded-[calc(1.4rem-0.375rem)] bg-white/[0.02] px-5 py-5">
+          <div class="font-display text-4xl font-semibold">13</div>
+          <div class="text-xs text-white/45 mt-1">Agents</div>
         </div>
-        <p class="text-[15px] text-white/80 mb-3">Morning. Here's your Tuesday.</p>
-        <ul class="space-y-2.5 text-[14px] text-white/60 leading-snug">
-          <li class="flex gap-2.5"><span class="text-violet-300/70 mt-0.5">→</span><span><span class="text-white/80">Calendar:</span> 3 meetings, first at 9:30 (Design sync). Clear window 12–2.</span></li>
-          <li class="flex gap-2.5"><span class="text-violet-300/70 mt-0.5">→</span><span><span class="text-white/80">Inbox:</span> 2 need you. Drafts ready to review before anything sends.</span></li>
-          <li class="flex gap-2.5"><span class="text-violet-300/70 mt-0.5">→</span><span><span class="text-white/80">Readiness:</span> 74 — six hours of sleep. Worth keeping today lighter.</span></li>
-          <li class="flex gap-2.5"><span class="text-violet-300/70 mt-0.5">→</span><span><span class="text-white/80">Dinner:</span> three spots near you for that 7pm — say the word and I'll route the errands around it.</span></li>
-        </ul>
       </div>
-      <p class="text-[11px] text-white/30 mt-2.5">Illustrative example — not real data.</p>
+      <div class="glass hairline rounded-[1.4rem] p-1.5">
+        <div class="innercore rounded-[calc(1.4rem-0.375rem)] bg-white/[0.02] px-5 py-5">
+          <div class="font-display text-4xl font-semibold">3</div>
+          <div class="text-xs text-white/45 mt-1">Channels</div>
+        </div>
+      </div>
+      <div class="glass hairline rounded-[1.4rem] p-1.5">
+        <div class="innercore rounded-[calc(1.4rem-0.375rem)] bg-white/[0.02] px-5 py-5">
+          <div class="font-display text-4xl font-semibold">1</div>
+          <div class="text-xs text-white/45 mt-1">Gateway</div>
+        </div>
+      </div>
+      <div class="glass hairline rounded-[1.4rem] p-1.5">
+        <div class="innercore rounded-[calc(1.4rem-0.375rem)] bg-white/[0.02] px-5 py-5">
+          <div class="font-display text-4xl font-semibold">0</div>
+          <div class="text-xs text-white/45 mt-1">Public inbound ports</div>
+        </div>
+      </div>
     </div>
+    <p class="reveal mt-8 font-mono text-[11px] text-white/35">current deployment · private, self-hosted · always-on</p>
   </section>
 
-  <!-- PRODUCT / WHAT IT IS -->
-  <section id="product" class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32">
-    <div class="reveal max-w-2xl">
-      <p class="text-violet-300/80 text-sm font-medium tracking-widest uppercase mb-4">What it is</p>
-      <h2 class="font-display font-bold text-3xl md:text-5xl tracking-tight grad-text leading-tight">One coordinated system — not another chat box to manage.</h2>
-      <p class="mt-6 text-white/60 text-lg leading-relaxed">Most "AI assistants" hand you a blank chat box and leave the work to you. Jenius Systems is the opposite: a small team of specialized agents that already know my context, coordinate with each other, and act without being re-briefed every time.</p>
+  <!-- ===== AT A GLANCE ===== -->
+  <section class="max-w-6xl mx-auto px-6 md:px-10 py-24">
+    <div class="reveal mb-12">
+      <span class="eyebrow text-white/40">01 — At a glance</span>
+      <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-tight mt-3">Four layers, one boundary</h2>
+      <p class="text-white/55 mt-4 max-w-2xl font-light">Everything runs loopback-only inside a private machine. Only an encrypted tunnel and key-only SSH cross the edge — there is no public inbound port.</p>
     </div>
-
-    <div class="grid md:grid-cols-3 gap-5 mt-14">
-      <div class="reveal glass hairline rounded-2xl p-7">
-        <div class="icon-chip mb-4">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="2.4"/><circle cx="5.5" cy="17" r="2.4"/><circle cx="18.5" cy="17" r="2.4"/><path d="M12 8.4v3.1M10.4 13.4 6.8 15.4M13.6 13.4l3.6 2"/></svg>
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+      <div class="reveal md:col-span-7 glass hairline rounded-[2rem] p-1.5">
+        <div class="innercore rounded-[calc(2rem-0.375rem)] bg-white/[0.02] p-8 h-full">
+          <div class="text-violet-300/80 eyebrow">The brain</div>
+          <h3 class="font-display text-2xl font-semibold mt-2">The Gateway</h3>
+          <p class="text-white/55 mt-3 font-light leading-relaxed">A single token-authenticated process, loopback-only. It routes every channel event to the right agent, dispatches the model call for that agent, and enforces per-agent tool gates and exec-approvals on the way out.</p>
         </div>
-        <h3 class="font-display font-semibold text-lg mb-2">A team, not a bot</h3>
-        <p class="text-white/55 text-[15px] leading-relaxed">Many specialized agents, each good at one thing, coordinated together — instead of one do-everything chatbot.</p>
       </div>
-      <div class="reveal glass hairline rounded-2xl p-7">
-        <div class="icon-chip mb-4">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h11l3 3V19.5H5z"/><path d="M16 4.5v3h3"/><path d="M8 11h8M8 14.5h8"/></svg>
+      <div class="reveal md:col-span-5 glass hairline rounded-[2rem] p-1.5">
+        <div class="innercore rounded-[calc(2rem-0.375rem)] bg-white/[0.02] p-8 h-full">
+          <div class="text-emerald-300/80 eyebrow">Surfaces</div>
+          <h3 class="font-display text-2xl font-semibold mt-2">How it's reached</h3>
+          <p class="text-white/55 mt-3 font-light leading-relaxed">A messaging app for conversation, email anywhere, SMS/voice to reach the same agent, and a private dashboard in the browser over an encrypted tunnel.</p>
         </div>
-        <h3 class="font-display font-semibold text-lg mb-2">It remembers</h3>
-        <p class="text-white/55 text-[15px] leading-relaxed">Durable memory across what I tell it, so I'm never re-explaining context or repeating myself.</p>
       </div>
-      <div class="reveal glass hairline rounded-2xl p-7">
-        <div class="icon-chip mb-4">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 5 13.5h6L11 21l8-10.5h-6z"/></svg>
+      <div class="reveal md:col-span-4 glass hairline rounded-[2rem] p-1.5">
+        <div class="innercore rounded-[calc(2rem-0.375rem)] bg-white/[0.02] p-8 h-full">
+          <div class="text-sky-300/80 eyebrow">Scheduling</div>
+          <h3 class="font-display text-xl font-semibold mt-2">Always-on services</h3>
+          <p class="text-white/55 mt-3 font-light text-sm leading-relaxed">System services survive reboot &amp; logout — gateway, dashboard, mail poller, morning digest, two SysOps audits, health, cost aggregator, auth watchdog, and the trading trio.</p>
         </div>
-        <h3 class="font-display font-semibold text-lg mb-2">It acts ahead</h3>
-        <p class="text-white/55 text-[15px] leading-relaxed">Proactive by design — it sends the morning brief and the "you should know about this" nudges before I ask.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- CAPABILITIES / WHAT IT DOES -->
-  <section id="capabilities" class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32">
-    <div class="reveal max-w-2xl mb-14">
-      <p class="text-violet-300/80 text-sm font-medium tracking-widest uppercase mb-4">What it does</p>
-      <h2 class="font-display font-bold text-3xl md:text-5xl tracking-tight grad-text leading-tight">A handful of specialists, working as one.</h2>
-      <p class="mt-6 text-white/60 text-lg leading-relaxed">Everything here runs today, reachable from one chat on Telegram.</p>
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-5">
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <h3 class="font-display font-semibold text-xl mb-3">Runs the day, proactively</h3>
-        <p class="text-white/55 leading-relaxed">A morning brief that fuses the schedule, the inbox and how I'm doing into one read — plus the follow-ups and "you should know about this" nudges, sent before I have to think about them.</p>
+      <div class="reveal md:col-span-4 glass hairline rounded-[2rem] p-1.5">
+        <div class="innercore rounded-[calc(2rem-0.375rem)] bg-white/[0.02] p-8 h-full">
+          <div class="text-amber-300/80 eyebrow">Posture</div>
+          <h3 class="font-display text-xl font-semibold mt-2">Least-privilege</h3>
+          <p class="text-white/55 mt-3 font-light text-sm leading-relaxed">Each agent gets only the tools it needs. Untrusted-input agents run an exec allowlist. Self-modification and money moves are gated behind a Reviewer + a one-time code.</p>
+        </div>
       </div>
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <h3 class="font-display font-semibold text-xl mb-3">Keeps the inbox under control</h3>
-        <p class="text-white/55 leading-relaxed">It reads and sorts what lands in the inbox, surfaces what actually needs me, and drafts replies — with a check-in before anything is sent.</p>
-      </div>
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <h3 class="font-display font-semibold text-xl mb-3">Aware of the calendar</h3>
-        <p class="text-white/55 leading-relaxed">It reads the calendar, so its answers and its planning fit around what the week already looks like — no copy-pasting the day into a chat.</p>
-      </div>
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <h3 class="font-display font-semibold text-xl mb-3">Looks out for how I'm doing</h3>
-        <p class="text-white/55 leading-relaxed">A daily read on readiness from the health data I already track, kept in a private log — so the rest of the day can flex to how rested I actually am.</p>
-      </div>
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <h3 class="font-display font-semibold text-xl mb-3">Concierge for the real world</h3>
-        <p class="text-white/55 leading-relaxed">From "find me somewhere for dinner nearby" to planning the errand route around it — it does the legwork and hands back real options, not just chat.</p>
-      </div>
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <h3 class="font-display font-semibold text-xl mb-3">Recipes &amp; meals</h3>
-        <p class="text-white/55 leading-relaxed">Send it a recipe and it saves it to a personal recipe box and folds it into the food side of things — one place instead of scattered screenshots.</p>
+      <div class="reveal md:col-span-4 glass hairline rounded-[2rem] p-1.5">
+        <div class="innercore rounded-[calc(2rem-0.375rem)] bg-white/[0.02] p-8 h-full">
+          <div class="text-rose-300/80 eyebrow">Cost shape</div>
+          <h3 class="font-display text-xl font-semibold mt-2">Cost-aware by design</h3>
+          <p class="text-white/55 mt-3 font-light text-sm leading-relaxed">Models are tiered per agent — lightweight reasoning for routine workers, premium only where the task demands it. Spend-sensitive paths carry hard daily caps.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- HOW IT'S BUILT -->
-  <section id="different" class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32">
-    <div class="reveal max-w-2xl mb-14">
-      <p class="text-violet-300/80 text-sm font-medium tracking-widest uppercase mb-4">How it's built</p>
-      <h2 class="font-display font-bold text-3xl md:text-5xl tracking-tight grad-text leading-tight">Private by default. Careful by design.</h2>
+  <!-- ===== FLEET ===== -->
+  <section id="fleet" class="max-w-6xl mx-auto px-6 md:px-10 py-24 scroll-mt-24">
+    <div class="reveal mb-12">
+      <span class="eyebrow text-white/40">02 — The fleet</span>
+      <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-tight mt-3">Thirteen agents, three tiers</h2>
+      <p class="text-white/55 mt-4 max-w-2xl font-light">One conversational hub, nine task workers, and three delegated specialists — each with its own workspace, model and tool gate. Three more specialists are built and waiting behind the reviewer gate.</p>
+      <div class="flex flex-wrap gap-4 mt-6 text-xs text-white/50">
+        <span class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-violet-400"></span>Premium tier</span>
+        <span class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-sky-400"></span>Fast tier</span>
+      </div>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <div class="icon-chip mb-4">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.1"/></svg>
+    <!-- HUB -->
+    <div class="reveal glass hairline rounded-[2rem] p-1.5 mb-3">
+      <div class="innercore rounded-[calc(2rem-0.375rem)] bg-gradient-to-br from-violet-500/10 to-transparent p-8 flex flex-col md:flex-row md:items-center gap-6">
+        <div class="md:w-1/3">
+          <span class="eyebrow text-violet-300/70">Hub</span>
+          <h3 class="font-display text-3xl font-semibold mt-2">Root</h3>
+          <div class="font-mono text-xs text-violet-200/70 mt-2">fast tier · messaging · SMS / voice</div>
         </div>
-        <h3 class="font-display font-semibold text-lg mb-2">It's private</h3>
-        <p class="text-white/55 text-[15px] leading-relaxed">A private setup that runs for one person. The data isn't sold or mined — it stays under my control.</p>
+        <p class="md:w-2/3 text-white/60 font-light leading-relaxed">The conversational front. Talks to the operator, holds personal-context memory, and delegates to the specialists. Root's primary push channel is a messaging app, with a fallback channel behind it. An <span class="text-white">SMS / voice bridge</span> lets you call or text the same agent — Root is the brain behind the call, not a separate one.</p>
       </div>
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <div class="icon-chip mb-4">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="12" cy="19" r="2"/><path d="M12 7v3M12 14v3M7 12h3M14 12h3"/></svg>
+    </div>
+
+    <!-- WORKERS bento -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Reviewer</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · messaging</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">The approval gate. Tier-based: routine auto-approves, sensitive escalates, system-tier identity edits require a one-time code.</p>
         </div>
-        <h3 class="font-display font-semibold text-lg mb-2">Built as a fleet</h3>
-        <p class="text-white/55 text-[15px] leading-relaxed">Many specialized agents coordinated together do better than one do-everything bot — depth where it counts.</p>
       </div>
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <div class="icon-chip mb-4">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 19 6v5c0 4.4-3 7.7-7 9.5-4-1.8-7-5.1-7-9.5V6z"/><path d="m9 11.5 2 2 4-4.5"/></svg>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Orchestrator</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · internal</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Cheap stateless router. Resolves agent names, validates payloads, rejects illegal cross-agent moves.</p>
         </div>
-        <h3 class="font-display font-semibold text-lg mb-2">Careful with the risky stuff</h3>
-        <p class="text-white/55 text-[15px] leading-relaxed">Guardrails around anything sensitive or irreversible — it asks before it does something it can't undo.</p>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Mail-Read</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · internal</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Inbound email processor. Read-only, prompt-injection-contained, catalog-disciplined output.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Mail-Send</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · internal</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Outbound action chain with per-recipient memory. Every send passes through Reviewer first.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Morning-Update</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · daily 7:00</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Daily digest from email, calendar, memory and your health data, delivered to your phone.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">SysOps</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · twice daily</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Self-modification audit + plan author. Diagnoses incidents and drafts fix plans for the Reviewer queue.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">SysOps-Escalation</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">heavier reasoning · escalation</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Heavier-reasoning SysOps lane reserved for sensitive system-tier diagnostics.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Health</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · daily 7:15</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Personal health-log curator. Append-only journaling from your wearable; sensitive-tier by default.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Crypto-Trader</h4><span class="text-[10px] rounded-full bg-amber-400/15 text-amber-300 px-2 py-0.5">shadow</span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · every 15m</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Journals intraday-momentum decisions, never trades. Withdraw/transfer denied at the tool gate; live trading is architecturally locked.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Marketplace</h4><span class="text-[10px] rounded-full bg-amber-400/15 text-amber-300 px-2 py-0.5">appraiser</span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · paste-in</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Paste a marketplace listing for a fair-price read and a scam-risk flag. Heuristics only — never messages a seller or moves money.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Calendar</h4><span class="text-[10px] rounded-full bg-sky-400/15 text-sky-300 px-2 py-0.5">read-only</span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · delegated</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Read-only calendar access. Lists, searches and reads events; the write tools are stripped from its loadout.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPECIALIST -->
+    <div class="reveal glass hairline rounded-[2rem] p-1.5 mt-3">
+      <div class="innercore rounded-[calc(2rem-0.375rem)] bg-gradient-to-br from-emerald-500/10 to-transparent p-8 flex flex-col md:flex-row md:items-center gap-6">
+        <div class="md:w-1/3">
+          <span class="eyebrow text-emerald-300/70">Specialist</span>
+          <h3 class="font-display text-3xl font-semibold mt-2">Concierge</h3>
+          <div class="font-mono text-xs text-emerald-200/70 mt-2">premium tier · delegated</div>
+        </div>
+        <p class="md:w-2/3 text-white/60 font-light leading-relaxed">"Find a mexican place near home", "plan this errand route". Backed by a maps &amp; places provider, it geocodes against a discard-after-use home base and is held to a <span class="text-white">hard daily cap</span>. Locked to an <span class="text-white">exec allowlist</span> of a few scripts — no web, mail or shell beyond them.</p>
+      </div>
+    </div>
+
+    <!-- REPO-ONLY (built, gated on deploy) -->
+    <div class="reveal mt-12 mb-5 flex items-baseline gap-3">
+      <span class="eyebrow text-white/40">Built &amp; gated — not yet deployed</span>
+      <span class="h-px flex-1 bg-white/8"></span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Recipe-Ingester</h4><span class="text-[10px] rounded-full bg-emerald-400/15 text-emerald-300 px-2 py-0.5">reviewer-gated</span></div>
+          <div class="font-mono text-[11px] text-emerald-200/60 mt-1">fast tier · built</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Forward a short video and it learns what you cook — files the recipe and feeds a topic signal into the morning ranking. Untrusted-caption contained.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Travel</h4><span class="text-[10px] rounded-full bg-sky-400/15 text-sky-300 px-2 py-0.5">reviewer-gated</span></div>
+          <div class="font-mono text-[11px] text-sky-200/60 mt-1">premium tier · built</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Destination-agnostic trip planner. Builds itineraries and surfaces booking deep-links — it never books for you.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Card-Benefits</h4><span class="text-[10px] rounded-full bg-amber-400/15 text-amber-300 px-2 py-0.5">reviewer-gated</span></div>
+          <div class="font-mono text-[11px] text-amber-200/60 mt-1">premium tier · built</div>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Tracks credit-card perks and reminds you which benefit fits. You tell it what you used — no account linking, no money movement.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ROADMAP / WHAT'S NEXT -->
-  <section id="roadmap" class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32">
-    <div class="reveal max-w-2xl mb-14">
-      <p class="text-violet-300/80 text-sm font-medium tracking-widest uppercase mb-4">What's coming</p>
-      <h2 class="font-display font-bold text-3xl md:text-5xl tracking-tight grad-text leading-tight">It keeps getting more useful.</h2>
-      <p class="mt-6 text-white/60 text-lg leading-relaxed">It's an ongoing personal project, so the fleet grows over time. A few things I'm building next:</p>
+  <!-- ===== TOPOLOGY ===== -->
+  <section id="topology" class="max-w-5xl mx-auto px-6 md:px-10 py-24 scroll-mt-24">
+    <div class="reveal mb-14">
+      <span class="eyebrow text-white/40">03 — Topology</span>
+      <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-tight mt-3">From your thumb to the model</h2>
+      <p class="text-white/55 mt-4 max-w-2xl font-light">A message flows down through the channels, across the network edge, into the gateway, out to an agent's model and any external service — then back the same way.</p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <span class="inline-block text-[11px] tracking-widest uppercase text-violet-300/70 border border-violet-300/20 rounded-md px-2 py-1 mb-5">In progress</span>
-        <h3 class="font-display font-semibold text-lg mb-2">Learns what I'm into</h3>
-        <p class="text-white/55 text-[15px] leading-relaxed">Forward it the things that catch my eye and it picks up on my taste — then brings back the media and news actually worth my attention.</p>
+    <div class="flex flex-col items-center gap-[52px]">
+      <div class="reveal w-full max-w-md text-center relative lane-link">
+        <div class="glass hairline rounded-[1.6rem] p-1.5">
+          <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.03] py-5 px-6">
+            <div class="eyebrow text-white/40">Surfaces</div>
+            <div class="font-display text-lg font-semibold mt-1">Operator — phone, laptop, browser</div>
+          </div>
+        </div>
       </div>
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <span class="inline-block text-[11px] tracking-widest uppercase text-violet-300/70 border border-violet-300/20 rounded-md px-2 py-1 mb-5">Planned</span>
-        <h3 class="font-display font-semibold text-lg mb-2">More specialists</h3>
-        <p class="text-white/55 text-[15px] leading-relaxed">The team keeps expanding into more real-world tasks — like travel planning — each new ability behind the same ask-first approval step.</p>
+      <div class="reveal w-full max-w-2xl relative lane-link">
+        <div class="text-center eyebrow text-white/35 mb-3">Channels</div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="glass hairline rounded-2xl py-4 text-center"><div class="font-display font-semibold">Messaging</div><div class="text-[11px] text-emerald-300/70 mt-0.5">Root · primary</div></div>
+          <div class="glass hairline rounded-2xl py-4 text-center"><div class="font-display font-semibold">Fallback chat</div><div class="text-[11px] text-white/40 mt-0.5">Root + Reviewer</div></div>
+          <div class="glass hairline rounded-2xl py-4 text-center"><div class="font-display font-semibold">SMS / voice</div><div class="text-[11px] text-white/40 mt-0.5">Root · bridge</div></div>
+        </div>
       </div>
-      <div class="reveal glass hairline rounded-2xl p-8">
-        <span class="inline-block text-[11px] tracking-widest uppercase text-violet-300/70 border border-violet-300/20 rounded-md px-2 py-1 mb-5">Planned</span>
-        <h3 class="font-display font-semibold text-lg mb-2">A deeper concierge</h3>
-        <p class="text-white/55 text-[15px] leading-relaxed">Richer real-world planning for the things that take more than one step — the legwork around my plans, end to end.</p>
+      <div class="reveal w-full max-w-2xl relative lane-link">
+        <div class="text-center eyebrow text-white/35 mb-3">Network edge — the only things that cross the boundary</div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="glass hairline rounded-2xl py-4 text-center"><div class="font-display font-semibold">Encrypted tunnel</div><div class="text-[11px] text-white/40 mt-0.5">WireGuard-based · private</div></div>
+          <div class="glass hairline rounded-2xl py-4 text-center"><div class="font-display font-semibold">SSH</div><div class="text-[11px] text-white/40 mt-0.5">key-only · tunnel + shell</div></div>
+        </div>
+      </div>
+      <div class="reveal w-full max-w-xl relative lane-link">
+        <div class="glass hairline rounded-[1.8rem] p-1.5 ring-1 ring-violet-400/20">
+          <div class="innercore rounded-[calc(1.8rem-0.375rem)] bg-gradient-to-b from-violet-500/15 to-white/[0.02] py-6 px-6 text-center">
+            <div class="font-display text-xl font-semibold">The Gateway</div>
+            <div class="font-mono text-xs text-violet-200/70 mt-1">loopback-only · token auth · enforces tool gates</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal w-full relative lane-link">
+        <div class="text-center eyebrow text-white/35 mb-3">Agents — isolated workspace per agent</div>
+        <div class="flex flex-wrap justify-center gap-2">
+          <span class="glass hairline rounded-full px-4 py-2 text-sm">Root</span>
+          <span class="glass hairline rounded-full px-4 py-2 text-sm">Reviewer</span>
+          <span class="glass hairline rounded-full px-4 py-2 text-sm">Orchestrator</span>
+          <span class="glass hairline rounded-full px-4 py-2 text-sm">Mail-Read / Send</span>
+          <span class="glass hairline rounded-full px-4 py-2 text-sm">Morning · SysOps · Health</span>
+          <span class="glass hairline rounded-full px-4 py-2 text-sm">Crypto-Trader</span>
+          <span class="glass hairline rounded-full px-4 py-2 text-sm text-emerald-200/90">Concierge</span>
+          <span class="glass hairline rounded-full px-4 py-2 text-sm text-emerald-200/90">Marketplace</span>
+          <span class="glass hairline rounded-full px-4 py-2 text-sm text-emerald-200/90">Calendar</span>
+          <span class="glass hairline rounded-full px-4 py-2 text-sm text-white/40">Recipe · Travel · Card-Benefits <span class="text-[10px]">· gated</span></span>
+        </div>
+      </div>
+      <div class="reveal w-full max-w-3xl">
+        <div class="text-center eyebrow text-white/35 mb-3">External providers — off-device (cloud)</div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-center">
+          <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">LLM providers</div><div class="text-[11px] text-white/40">tiered per agent</div></div>
+          <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Email &amp; calendar</div><div class="text-[11px] text-white/40">read / draft</div></div>
+          <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Maps &amp; places</div><div class="text-[11px] text-white/40">concierge</div></div>
+          <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Health data</div><div class="text-[11px] text-white/40">wearable</div></div>
+          <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Crypto exchange</div><div class="text-[11px] text-white/40">shadow only</div></div>
+          <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Encrypted network</div><div class="text-[11px] text-white/40">control plane</div></div>
+        </div>
+      </div>
+
+      <!-- On-device brain -->
+      <div class="reveal w-full max-w-3xl">
+        <div class="text-center eyebrow text-emerald-300/45 mb-3">— and one model backend that never leaves the device —</div>
+        <div class="glass hairline rounded-[1.8rem] p-1.5 ring-1 ring-emerald-400/20">
+          <div class="innercore rounded-[calc(1.8rem-0.375rem)] bg-gradient-to-b from-emerald-500/12 to-white/[0.02] p-7">
+            <div class="flex items-center justify-center gap-2.5 mb-5">
+              <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
+              <span class="font-display text-lg font-semibold">Local Brain — on the host, on-device</span>
+              <span class="text-[10px] rounded-full bg-emerald-400/15 text-emerald-200 px-2 py-0.5">live</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+              <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">A small local model</div><div class="text-[11px] text-white/40">the judge · scoring &amp; recall</div></div>
+              <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Local embeddings</div><div class="text-[11px] text-white/40">semantic index</div></div>
+              <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">On-device vector store</div><div class="text-[11px] text-white/40">private recall</div></div>
+            </div>
+            <p class="text-white/55 text-sm mt-5 font-light leading-relaxed text-center max-w-2xl mx-auto">
+              Private semantic recall at <span class="text-white">zero marginal cost</span> — sensitive context is embedded and judged <span class="text-white">on-device</span>, never sent to a third-party API. The gateway reaches it locally, and the dashboard renders the live memory-sphere over a same-origin proxy.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT / HONEST CLOSING -->
-  <section id="about" class="max-w-3xl mx-auto px-6 md:px-10 py-24 md:py-36 text-center">
-    <div class="reveal">
-      <p class="text-violet-300/80 text-sm font-medium tracking-widest uppercase mb-4">In short</p>
-      <h2 class="font-display font-bold text-3xl md:text-5xl tracking-tight grad-text leading-tight">A personal project — not a product.</h2>
-      <p class="mt-6 text-white/60 text-lg leading-relaxed max-w-xl mx-auto">Jenius Systems is something I built for myself, and keep building. It isn't for sale, it isn't a company, and there's nothing to sign up for. This page just exists so I can show people what it actually does.</p>
+  <!-- ===== SECURITY ===== -->
+  <section id="security" class="max-w-6xl mx-auto px-6 md:px-10 py-24 scroll-mt-24">
+    <div class="reveal mb-12">
+      <span class="eyebrow text-white/40">04 — Security model</span>
+      <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-tight mt-3">Nothing irreversible without a gate</h2>
+      <p class="text-white/55 mt-4 max-w-2xl font-light">Three concentric controls — what tools an agent has, what commands it may exec, and a human-plus-one-time-code gate on anything that rewrites the system or moves money — built on standard, auditable protocols.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
+          <div class="eyebrow text-violet-300/70">Layer 1</div>
+          <h3 class="font-display text-xl font-semibold mt-2">Tool allowlists</h3>
+          <p class="text-white/55 text-sm mt-3 font-light leading-relaxed">Each agent is granted only the tools it needs. Untrusted-input agents (like Concierge) use a fail-closed <span class="text-white">allowlist</span> rather than a deny-list — a missed deny silently lets everything through, an allowlist over-restricts loudly. Gates are verified empirically, not assumed.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
+          <div class="eyebrow text-emerald-300/70">Layer 2</div>
+          <h3 class="font-display text-xl font-semibold mt-2">Exec approvals</h3>
+          <p class="text-white/55 text-sm mt-3 font-light leading-relaxed">The <span class="font-mono text-white/80 text-xs">exec</span> tool is itself gated. Untrusted agents may run only a short, named allowlist of scripts under a fail-closed policy, so a headless miss denies rather than runs.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
+          <div class="eyebrow text-rose-300/70">Layer 3</div>
+          <h3 class="font-display text-xl font-semibold mt-2">Kill switches + one-time code</h3>
+          <p class="text-white/55 text-sm mt-3 font-light leading-relaxed">Self-mod and trading each have a one-flag kill switch. System-tier writes demand a one-time code from a separate device.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Self-mod chain -->
+    <div class="reveal glass hairline rounded-[2rem] p-1.5 mb-3">
+      <div class="innercore rounded-[calc(2rem-0.375rem)] bg-white/[0.02] p-8">
+        <h3 class="font-display text-xl font-semibold">The self-modification chain</h3>
+        <p class="text-white/50 text-sm mt-2 font-light">An agent can propose changes to its own config — but never apply them alone.</p>
+        <div class="flex flex-wrap items-center gap-2 mt-6 text-sm">
+          <span class="glass hairline rounded-xl px-4 py-2.5">SysOps writes plan</span>
+          <span class="text-white/30">→</span>
+          <span class="rounded-xl px-4 py-2.5 bg-amber-400/10 border border-amber-400/25 text-amber-200">plan-validate · kill-switch + targets</span>
+          <span class="text-white/30">→</span>
+          <span class="rounded-xl px-4 py-2.5 bg-sky-400/10 border border-sky-400/25 text-sky-200">Reviewer queue</span>
+          <span class="text-white/30">→</span>
+          <span class="rounded-xl px-4 py-2.5 bg-rose-500/10 border border-rose-500/30 text-rose-200">one-time-code gate</span>
+          <span class="text-white/30">→</span>
+          <span class="glass hairline rounded-xl px-4 py-2.5">plan-execute · checksum + backup</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Standards & verification -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div class="reveal glass hairline rounded-[2rem] p-1.5">
+        <div class="innercore rounded-[calc(2rem-0.375rem)] bg-white/[0.02] p-8 h-full">
+          <div class="eyebrow text-white/40">Standards</div>
+          <h3 class="font-display text-xl font-semibold mt-2">Built on auditable protocols</h3>
+          <ul class="mt-4 space-y-3 text-sm text-white/55 font-light">
+            <li class="flex gap-3"><span class="text-violet-300/70 font-mono text-xs pt-0.5 shrink-0">NET</span><span>Every service binds to loopback — no public inbound port. The only edges are an encrypted tunnel and key-only SSH; the gateway requires an auth token on every request.</span></li>
+            <li class="flex gap-3"><span class="text-emerald-300/70 font-mono text-xs pt-0.5 shrink-0">AUTH</span><span>Step-up auth via <span class="text-white">TOTP (RFC&nbsp;6238)</span> on system-tier writes; <span class="text-white">OAuth&nbsp;2.0</span> for mail; TLS to every upstream provider; secrets stored with least-privilege file permissions.</span></li>
+            <li class="flex gap-3"><span class="text-rose-300/70 font-mono text-xs pt-0.5 shrink-0">INTEG</span><span><span class="text-white">SHA-256</span> checksum verification before any self-mod write (halt-on-mismatch), timestamped backups, and a config-schema validation gate that runs <em>before</em> the gateway is ever restarted.</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[2rem] p-1.5">
+        <div class="innercore rounded-[calc(2rem-0.375rem)] bg-white/[0.02] p-8 h-full">
+          <div class="eyebrow text-white/40">Verification</div>
+          <h3 class="font-display text-xl font-semibold mt-2">Tests run &amp; passing</h3>
+          <ul class="mt-4 space-y-3 text-sm text-white/55 font-light">
+            <li class="flex items-start gap-3"><span class="text-emerald-300 pt-0.5">✓</span><span><span class="text-white">Core smoke suite — 34/34</span> green (channel, routing, gateway, daemon health).</span></li>
+            <li class="flex items-start gap-3"><span class="text-emerald-300 pt-0.5">✓</span><span><span class="text-white">Self-mod chain — 17/17</span> across all five rejection paths (kill-switch, expiry, forbidden-target, checksum, source allowlist).</span></li>
+            <li class="flex items-start gap-3"><span class="text-emerald-300 pt-0.5">✓</span><span><span class="text-white">Exec-approval allowlist</span> verified empirically — an allowed command runs, a non-listed one is denied.</span></li>
+            <li class="flex items-start gap-3"><span class="text-emerald-300 pt-0.5">✓</span><span><span class="text-white">Continuous guardrails</span> — heartbeat-staleness and cache-health monitors surface silent failures.</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="relative z-10 border-t border-white/5 mt-10">
-    <div class="max-w-6xl mx-auto px-6 md:px-10 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/40">
-      <div class="flex items-center gap-2 font-display">
-        <span class="brand-j text-lg">J</span><span class="text-white/70 font-semibold tracking-tight">enius Systems</span>
+  <!-- ===== ROADMAP ===== -->
+  <section id="roadmap" class="max-w-4xl mx-auto px-6 md:px-10 py-24 scroll-mt-24">
+    <div class="reveal mb-12">
+      <span class="eyebrow text-white/40">05 — Shipped &amp; next</span>
+      <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-tight mt-3">What's next</h2>
+      <p class="text-white/55 mt-4 max-w-2xl font-light">The platform is built to extend itself through the same gated chain it uses today. The on-device brain just landed; the rest is planned work, in rough priority order.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
+          <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-emerald-400/15 text-emerald-200 px-2.5 py-0.5">✓ Live</span></div>
+          <h3 class="font-display text-lg font-semibold mt-3">On-device memory layer</h3>
+          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Shipped. A small local model with local embeddings over an on-device vector store — private, zero-marginal-cost recall, live in the dashboard as the rotating memory sphere. Next: ingestion to fill the store at scale.</p>
+        </div>
       </div>
-      <p>© <span id="year">2026</span> Jenius Systems · a personal project</p>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
+          <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-sky-400/15 text-sky-200 px-2.5 py-0.5">In build</span></div>
+          <h3 class="font-display text-lg font-semibold mt-3">Proactive watcher</h3>
+          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">A watcher/responder tier that surfaces what matters before it's asked — novelty-gated so it speaks up only when something genuinely warrants attention.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
+          <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-emerald-400/15 text-emerald-200 px-2.5 py-0.5">Near-term</span></div>
+          <h3 class="font-display text-lg font-semibold mt-3">Model consolidation</h3>
+          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Consolidate the daily-driver fleet onto a single model tier to flatten and predict behaviour without changing what the agents do.</p>
+        </div>
+      </div>
+      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
+        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
+          <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-white/10 text-white/70 px-2.5 py-0.5">Queued</span></div>
+          <h3 class="font-display text-lg font-semibold mt-3">Specialist expansion</h3>
+          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Calendar-aware scheduling, long-horizon deep research, and marketplace agents — each installable through the gated self-mod chain, never bypassing Reviewer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="max-w-6xl mx-auto px-6 md:px-10 py-20 border-t border-white/5 mt-12">
+    <div class="reveal flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="font-display font-semibold tracking-tight"><span class="brand-j">j</span>enius Systems</div>
+      <div class="text-white/35 text-xs font-mono">a private, self-hosted multi-agent platform · architecture overview · a personal project</div>
     </div>
   </footer>
 
 </main>
 
 <script>
-  // Year
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Mobile menu
-  const navToggle = document.getElementById('navToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const ln1 = document.getElementById('ln1'), ln2 = document.getElementById('ln2');
-  let menuOpen = false;
-  function setMenu(open) {
-    menuOpen = open;
-    mobileMenu.classList.toggle('hidden', !open);
-    mobileMenu.classList.toggle('flex', open);
-    ln1.style.transform = open ? 'translateY(6px) rotate(45deg)' : '';
-    ln2.style.transform = open ? 'translateY(-6px) rotate(-45deg)' : '';
-    const links = mobileMenu.querySelectorAll('.mob-link');
-    links.forEach((l, i) => {
-      setTimeout(() => {
-        l.style.transition = 'all 0.5s cubic-bezier(0.16,1,0.3,1)';
-        l.style.opacity = open ? '1' : '0';
-        l.style.transform = open ? 'none' : 'translateY(24px)';
-      }, open ? 80 + i * 60 : 0);
-    });
-  }
-  navToggle.addEventListener('click', () => setMenu(!menuOpen));
-  mobileMenu.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => setMenu(false)));
-
-  // Scroll reveal
   const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.12 });
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) { e.target.style.transitionDelay = (Math.min(i,4) * 70) + 'ms'; e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const toggle = document.getElementById('navToggle');
+  const menu = document.getElementById('mobileMenu');
+  const ln1 = document.getElementById('ln1'), ln2 = document.getElementById('ln2');
+  const links = document.querySelectorAll('.mob-link');
+  let open = false;
+  function setMenu(state){
+    open = state;
+    if (open){
+      menu.classList.remove('hidden'); menu.classList.add('flex');
+      ln1.style.transform = 'translateY(6px) rotate(45deg)';
+      ln2.style.transform = 'translateY(-6px) rotate(-45deg)';
+      links.forEach((l,i)=>{ setTimeout(()=>{ l.style.transition='all .5s cubic-bezier(0.32,0.72,0,1)'; l.classList.remove('opacity-0','translate-y-6'); }, 80 + i*70); });
+    } else {
+      ln1.style.transform=''; ln2.style.transform='';
+      links.forEach(l=>l.classList.add('opacity-0','translate-y-6'));
+      setTimeout(()=>{ menu.classList.add('hidden'); menu.classList.remove('flex'); }, 250);
+    }
+  }
+  toggle.addEventListener('click', ()=>setMenu(!open));
+  links.forEach(l=>l.addEventListener('click', ()=>setMenu(false)));
 </script>
 </body>
 </html>
