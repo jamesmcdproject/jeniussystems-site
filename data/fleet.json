@@ -1,0 +1,152 @@
+{
+  "generated": "2026-06-10",
+  "tiers": [
+    {
+      "name": "hub",
+      "agents": [
+        {
+          "name": "Atlas",
+          "accent": "violet",
+          "blurb": "The conversational front. Talks to the operator, holds personal-context memory, and delegates to the specialists. Atlas's primary push channel is a messaging app, with a fallback channel behind it. An SMS / voice bridge lets you call or text the same agent -- Atlas is the brain behind the call, not a separate one.",
+          "tags": [
+            "fast tier",
+            "messaging",
+            "SMS / voice"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "worker",
+      "agents": [
+        {
+          "name": "Aurora",
+          "accent": "sky",
+          "blurb": "Daily digest from email, calendar, memory and your health data, delivered to your phone.",
+          "tags": [
+            "fast tier",
+            "daily 7:00"
+          ]
+        },
+        {
+          "name": "Envoy",
+          "accent": "sky",
+          "blurb": "Outbound action chain with per-recipient memory. Every send passes through Sentinel first.",
+          "tags": [
+            "fast tier",
+            "internal"
+          ]
+        },
+        {
+          "name": "Horizon",
+          "accent": "sky",
+          "blurb": "Read-only calendar access. Lists, searches and reads events; the write tools are stripped from its loadout.",
+          "tags": [
+            "fast tier",
+            "delegated"
+          ]
+        },
+        {
+          "name": "Ledger",
+          "accent": "amber",
+          "blurb": "Journals intraday-momentum decisions, never trades. Withdraw/transfer denied at the tool gate; live trading is architecturally locked.",
+          "tags": [
+            "fast tier",
+            "every 15m"
+          ]
+        },
+        {
+          "name": "Overseer",
+          "accent": "sky",
+          "blurb": "The senior troubleshooter — a more powerful reasoning agent brought in for the hardest, most sensitive system problems.",
+          "tags": [
+            "heavier reasoning",
+            "escalation"
+          ]
+        },
+        {
+          "name": "Pulse",
+          "accent": "sky",
+          "blurb": "Personal health-log curator. Append-only journaling from your wearable; sensitive-tier by default.",
+          "tags": [
+            "fast tier",
+            "daily 7:15"
+          ]
+        },
+        {
+          "name": "Relay",
+          "accent": "sky",
+          "blurb": "The traffic controller for every request. It checks that each message is well-formed and permitted before passing it along, and turns away anything that looks suspicious.",
+          "tags": [
+            "fast tier",
+            "internal"
+          ]
+        },
+        {
+          "name": "Scout",
+          "accent": "sky",
+          "blurb": "Reads incoming email safely and files what matters — without ever acting on instructions found inside a message.",
+          "tags": [
+            "fast tier",
+            "internal"
+          ]
+        },
+        {
+          "name": "Sentinel",
+          "accent": "sky",
+          "blurb": "The approval gate. Tier-based: routine auto-approves, sensitive escalates, system-tier identity edits require a one-time code.",
+          "tags": [
+            "fast tier",
+            "messaging"
+          ]
+        },
+        {
+          "name": "Steward",
+          "accent": "sky",
+          "blurb": "Self-modification audit + plan author. Diagnoses incidents and drafts fix plans for the Sentinel queue.",
+          "tags": [
+            "fast tier",
+            "twice daily"
+          ]
+        },
+        {
+          "name": "Verdict",
+          "accent": "amber",
+          "blurb": "Paste a marketplace listing for a fair-price read and a scam-risk flag. Estimates only -- never messages a seller or moves money.",
+          "tags": [
+            "fast tier",
+            "paste-in"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "specialist",
+      "agents": [
+        {
+          "name": "Concierge",
+          "accent": "emerald",
+          "blurb": "\"Find a Mexican place near home\", \"plan this errand route\". Backed by a maps and places provider, it geocodes against a discard-after-use home base and is held to a hard daily cap. Locked to an exec allowlist of a few scripts -- no web, mail or shell beyond them.",
+          "tags": [
+            "premium tier",
+            "delegated"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gated",
+      "agents": [
+        {
+          "name": "Sous",
+          "accent": "emerald",
+          "blurb": "Forward a short cooking video and it learns the recipe and files it in your recipe box, then feeds a topic signal into the morning ranking.",
+          "tags": [
+            "fast tier",
+            "built"
+          ]
+        }
+      ]
+    }
+  ]
+}
