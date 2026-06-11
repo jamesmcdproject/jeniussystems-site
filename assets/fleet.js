@@ -92,6 +92,15 @@
     // no-JS / fetch-fail fallback.
     var statAgents = document.getElementById('stat-agents');
     if (statAgents && count > 0) statAgents.textContent = String(count);
+
+    // Drive the Fleet section heading so it never drifts from the roster.
+    // Fallback static text "The fleet, three tiers" shows when JS/fetch fail.
+    var fleetHeading = document.getElementById('fleet-heading-count');
+    if (fleetHeading && count > 0) {
+      var stamp = fleetHeading.querySelector('#fleet-updated');
+      fleetHeading.textContent = count + ' agents, three tiers ';
+      if (stamp) fleetHeading.appendChild(stamp);
+    }
   }
 
   fetch('data/fleet.json', { cache: 'no-store' })
