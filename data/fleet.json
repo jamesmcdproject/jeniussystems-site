@@ -131,19 +131,14 @@
             "premium tier",
             "delegated"
           ]
-        }
-      ]
-    },
-    {
-      "name": "gated",
-      "agents": [
+        },
         {
           "name": "Sous",
           "accent": "emerald",
           "blurb": "Forward a short cooking video and it learns the recipe and files it in your recipe box, then feeds a topic signal into the morning ranking.",
           "tags": [
             "fast tier",
-            "built"
+            "delegated"
           ]
         }
       ]
