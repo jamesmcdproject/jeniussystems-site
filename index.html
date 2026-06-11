@@ -50,7 +50,7 @@
 
   .eyebrow { font-size:10px; letter-spacing:0.24em; text-transform:uppercase; }
   .grad-text { background:linear-gradient(180deg,#fff 0%, #b9b4d6 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .brand-j { font-family:'Parisienne', cursive; font-weight:400; font-style:normal; padding-right:0.04em; line-height:1; -webkit-text-fill-color:#e7e3f6; color:#e7e3f6; }
+  .brand-j { font-family:'Parisienne', cursive; font-weight:400; font-style:normal; padding-right:0; display:inline-block; margin-right:-0.28em; line-height:1; -webkit-text-fill-color:#e7e3f6; color:#e7e3f6; }
   .brand-hero { text-indent:0.22em; }
   .brand-hero .brand-j { font-size:1.18em; display:inline-block; margin-right:0.04em; }
   ::selection { background:rgba(139,118,224,0.35); }
@@ -81,7 +81,7 @@
   <div class="glass hairline rounded-full px-2.5 py-2 flex items-center gap-1 shadow-[0_8px_40px_rgba(0,0,0,0.5)] w-full max-w-3xl">
     <a href="#top" class="flex items-center gap-2 pl-3 pr-4 py-1.5 font-display font-semibold tracking-tight text-sm whitespace-nowrap">
       <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
-      <span class="brand-j" style="font-size:1.15em;line-height:1;display:inline-block;margin-right:0.04em;">j</span>enius Systems
+      <span class="brand-j" style="font-size:1.45em;vertical-align:-0.08em;">j</span>enius Systems
     </a>
     <div class="hidden md:flex items-center gap-1 ml-auto text-[13px] text-white/65">
       <a href="#fleet" class="px-3.5 py-2 rounded-full hover:bg-white/5 hover:text-white transition-all duration-500">Fleet</a>
@@ -571,35 +571,21 @@
     <div class="reveal mb-12">
       <span class="eyebrow text-white/40">06 — Shipped &amp; next</span>
       <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-tight mt-3">What's next</h2>
-      <p class="text-white/55 mt-4 max-w-2xl font-light">The platform is built to extend itself through the same gated chain it uses today. The on-device brain just landed; the rest is planned work, in rough priority order.</p>
+      <p class="text-white/55 mt-4 max-w-2xl font-light">The platform is built to extend itself through the same gated chain it uses today. Everything below is planned work, in rough priority order.</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
       <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
         <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
-          <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-emerald-400/15 text-emerald-200 px-2.5 py-0.5">✓ Live</span></div>
-          <h3 class="font-display text-lg font-semibold mt-3">On-device memory layer</h3>
-          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Shipped. A small local model with local embeddings over an on-device vector store — private, zero-marginal-cost recall, live in the dashboard as the rotating memory sphere. Next: ingestion to fill the store at scale.</p>
-        </div>
-      </div>
-      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
-        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
-          <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-sky-400/15 text-sky-200 px-2.5 py-0.5">In build</span></div>
-          <h3 class="font-display text-lg font-semibold mt-3">Proactive watcher</h3>
-          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">A watcher/responder tier that surfaces what matters before it's asked — novelty-gated so it speaks up only when something genuinely warrants attention.</p>
-        </div>
-      </div>
-      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
-        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
-          <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-emerald-400/15 text-emerald-200 px-2.5 py-0.5">Near-term</span></div>
-          <h3 class="font-display text-lg font-semibold mt-3">Model consolidation</h3>
-          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Consolidate the daily-driver fleet onto a single model tier to flatten and predict behaviour without changing what the agents do.</p>
+          <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-white/10 text-white/70 px-2.5 py-0.5">Queued</span></div>
+          <h3 class="font-display text-lg font-semibold mt-3">Specialist expansion</h3>
+          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Voice and phone-call access, travel planning, card-benefits tracking, and a personal style curator — each installable through the gated self-mod chain, never bypassing Sentinel.</p>
         </div>
       </div>
       <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
         <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
           <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-white/10 text-white/70 px-2.5 py-0.5">Queued</span></div>
-          <h3 class="font-display text-lg font-semibold mt-3">Specialist expansion</h3>
-          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Calendar-aware scheduling, long-horizon deep research, and marketplace agents — each installable through the gated self-mod chain, never bypassing Sentinel.</p>
+          <h3 class="font-display text-lg font-semibold mt-3">Coaching layer</h3>
+          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Goal-aware coaching across health and habits — streaks, accountability and gentle course-correction, built on the signals the fleet already sees.</p>
         </div>
       </div>
     </div>
