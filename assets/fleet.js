@@ -57,9 +57,11 @@
     if (!data || !Array.isArray(data.tiers)) throw new Error('bad shape');
     var frag = document.createDocumentFragment();
     var any = false;
+    var count = 0;
 
     data.tiers.forEach(function (tier) {
       if (!tier || !Array.isArray(tier.agents) || !tier.agents.length) return;
+      count += tier.agents.length;
       var label = TIER_LABELS[tier.name] || tier.name;
 
       var headRow = el('div', 'fl-tier reveal in');
@@ -84,6 +86,12 @@
     if (stamp && typeof data.generated === 'string') {
       stamp.textContent = 'Roster updated ' + data.generated;
     }
+
+    // Drive the Overview agent-count stat from the live roster so the
+    // page never hard-codes a number that drifts. Static text is the
+    // no-JS / fetch-fail fallback.
+    var statAgents = document.getElementById('stat-agents');
+    if (statAgents && count > 0) statAgents.textContent = String(count);
   }
 
   fetch('data/fleet.json', { cache: 'no-store' })

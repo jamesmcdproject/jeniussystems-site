@@ -112,6 +112,7 @@
   <button data-tab="overview">Overview</button>
   <button data-tab="fleet">The Fleet</button>
   <button data-tab="topology">Architecture</button>
+  <button data-tab="ops">Operations</button>
   <button data-tab="security">Security</button>
   <button data-tab="roadmap">Roadmap</button>
 </nav>
@@ -128,13 +129,13 @@
       <span class="brand-j">j</span>enius Systems
     </h1>
     <p class="reveal mt-7 max-w-2xl text-lg md:text-2xl text-white/60 leading-relaxed font-light">
-      A private, self-hosted fleet of <span class="text-white font-normal">thirteen AI agents</span> — handling email, messaging, health, a shadow crypto-trader, a marketplace appraiser, a read-only calendar and a places concierge, all behind a single hardened gateway. A personal project, not a product.
+      A private, self-hosted fleet of <span class="text-white font-normal">AI agents</span> — handling email, messaging, health, a shadow crypto-trader, a marketplace appraiser, a read-only calendar and a places concierge, all behind a single hardened gateway. A personal project, not a product.
     </p>
 
     <div class="reveal mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl">
       <div class="glass hairline rounded-[1.4rem] p-1.5">
         <div class="innercore rounded-[calc(1.4rem-0.375rem)] bg-white/[0.02] px-5 py-5">
-          <div class="font-display text-4xl font-semibold">13</div>
+          <div id="stat-agents" class="font-display text-4xl font-semibold">13</div>
           <div class="text-xs text-white/45 mt-1">Agents</div>
         </div>
       </div>
@@ -451,10 +452,40 @@
     </div>
   </section>
 
+  <!-- ===== OPERATIONS (simulated console) ===== -->
+  <section id="ops" class="max-w-6xl mx-auto px-6 md:px-10 py-24 scroll-mt-24">
+    <div class="reveal mb-12">
+      <span class="eyebrow text-white/40">04 — Operations</span>
+      <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-tight mt-3">The console</h2>
+      <p class="text-white/55 mt-4 max-w-2xl font-light">A glimpse of how the fleet is watched day to day — status at a glance, the on-device brain working, and a running feed of what the agents are doing, all behind the same human-gated boundary.</p>
+      <p class="reveal mt-3 font-mono text-[11px] text-amber-200/60">Simulated preview — illustrative data.</p>
+    </div>
+
+    <!-- JS builds the live-looking console here -->
+    <div id="ops-live" class="reveal"></div>
+
+    <!-- No-JS / fetch-fail fallback: a short note + one static styled panel,
+         so the section is never empty without scripts. -->
+    <noscript>
+      <div class="ops-panel" data-ac="emerald">
+        <div class="ops-panel-head"><span class="eyebrow ops-panel-label">The console</span></div>
+        <p class="text-white/55 font-light leading-relaxed" style="margin:.25rem 0 1rem;">
+          The operations console shows fleet status, the on-device brain's activity and a running feed of agent actions. The interactive preview needs JavaScript; what follows is a static illustration.
+        </p>
+        <div class="ops-strip">
+          <div class="ops-tile" data-ac="violet"><div class="ops-tile-top"><span class="ops-dot"></span><span class="ops-tile-key">Agents</span></div><div class="ops-tile-val">14</div></div>
+          <div class="ops-tile" data-ac="sky"><div class="ops-tile-top"><span class="ops-dot"></span><span class="ops-tile-key">Channels</span></div><div class="ops-tile-val">4</div></div>
+          <div class="ops-tile" data-ac="emerald"><div class="ops-tile-top"><span class="ops-dot"></span><span class="ops-tile-key">Gateway</span></div><div class="ops-tile-val">healthy</div></div>
+          <div class="ops-tile" data-ac="sky"><div class="ops-tile-top"><span class="ops-dot"></span><span class="ops-tile-key">Uptime</span></div><div class="ops-tile-val">36d</div></div>
+        </div>
+      </div>
+    </noscript>
+  </section>
+
   <!-- ===== SECURITY ===== -->
   <section id="security" class="max-w-6xl mx-auto px-6 md:px-10 py-24 scroll-mt-24">
     <div class="reveal mb-12">
-      <span class="eyebrow text-white/40">04 — Security model</span>
+      <span class="eyebrow text-white/40">05 — Security model</span>
       <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-tight mt-3">Nothing irreversible without a gate</h2>
       <p class="text-white/55 mt-4 max-w-2xl font-light">Three concentric controls — what tools an agent has, what commands it may exec, and a human-plus-one-time-code gate on anything that rewrites the system or moves money — built on standard, auditable protocols.</p>
     </div>
@@ -533,7 +564,7 @@
   <!-- ===== ROADMAP ===== -->
   <section id="roadmap" class="max-w-4xl mx-auto px-6 md:px-10 py-24 scroll-mt-24">
     <div class="reveal mb-12">
-      <span class="eyebrow text-white/40">05 — Shipped &amp; next</span>
+      <span class="eyebrow text-white/40">06 — Shipped &amp; next</span>
       <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-tight mt-3">What's next</h2>
       <p class="text-white/55 mt-4 max-w-2xl font-light">The platform is built to extend itself through the same gated chain it uses today. The on-device brain just landed; the rest is planned work, in rough priority order.</p>
     </div>
@@ -609,5 +640,6 @@
 </script>
 <script src="assets/tabs.js" defer></script>
 <script src="assets/fleet.js" defer></script>
+<script src="assets/ops.js" defer></script>
 </body>
 </html>
