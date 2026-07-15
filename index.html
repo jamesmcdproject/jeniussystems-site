@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Security hardening (maint-001, partial): CSP + referrer via meta. HSTS and
+     X-Frame-Options cannot be set from meta tags — those need the CDN/proxy
+     pathway. If you edit the inline <script> below, its sha256 here MUST be
+     recomputed or nav/reveal silently breaks. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-rAMkPOizbx/eHVWPw7mNOnECA1jPwwntwFe1AUjs+xg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>jenius Systems — Architecture</title>
 <meta name="description" content="jenius Systems — a self-hosted fleet of AI agents. Email, messaging, health, a shadow crypto trader, a marketplace appraiser, a read-only calendar and a places concierge, all behind one hardened gateway.">
 
