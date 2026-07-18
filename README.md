@@ -1,6 +1,6 @@
 # jeniussystems.ai
 
-Source for the **Jenius Systems** one-page site — a static landing page describing
+Source for the **jenius Systems** one-page site — a static landing page describing
 a personal AI assistant project. Hosted free on GitHub Pages.
 
 - Single static page. No backend, no tracking, no build step required to serve.
