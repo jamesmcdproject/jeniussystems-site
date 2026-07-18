@@ -7,11 +7,10 @@
         {
           "name": "Atlas",
           "accent": "violet",
-          "blurb": "The conversational front. Talks to the operator, holds personal-context memory, and delegates to the specialists. Atlas's primary push channel is a messaging app, with a fallback channel behind it. An SMS / voice bridge lets you call or text the same agent -- Atlas is the brain behind the call, not a separate one.",
+          "blurb": "The conversational front. Talks to the operator, holds personal-context memory, and delegates to the specialists. Atlas's primary push channel is a messaging app, with a fallback channel behind it. An SMS / voice bridge is built and gated -- once armed, calling or texting reaches the same agent, with Atlas as the brain behind the call.",
           "tags": [
             "fast tier",
-            "messaging",
-            "SMS / voice"
+            "messaging"
           ]
         }
       ]
@@ -22,7 +21,7 @@
         {
           "name": "Aurora",
           "accent": "sky",
-          "blurb": "Daily digest from email, calendar, memory and your health data, delivered to your phone.",
+          "blurb": "Daily digest from email, calendar, memory and your health data, delivered to your phone. Anything it reports as shipped is backed by a verified receipt, not a claim.",
           "tags": [
             "fast tier",
             "daily 7:00"
@@ -76,7 +75,7 @@
         {
           "name": "Sentinel",
           "accent": "sky",
-          "blurb": "The approval gate. Tier-based: routine auto-approves, sensitive escalates, system-tier identity edits require a one-time code.",
+          "blurb": "The approval gate. Tier-based: routine auto-approves, sensitive escalates to the operator's phone for a one-tap decision, system-tier identity edits require a one-time code.",
           "tags": [
             "fast tier",
             "messaging"
@@ -106,20 +105,20 @@
       "name": "specialist",
       "agents": [
         {
-          "name": "Bursar",
+          "name": "Concierge",
           "accent": "emerald",
-          "blurb": "Knows every perk on the cards in your wallet. Ask \"which card for this purchase?\" and it answers from the fine print -- and it watches statement credits so they get used, not wasted. Read-only: it advises, never spends.",
+          "blurb": "\"Find a Mexican place near home\", \"plan this errand route\". Backed by a maps and places provider, it geocodes against a discard-after-use home base and is held to a hard daily cap. Locked to an exec allowlist of a few scripts -- no web, mail or shell beyond them. Trip planning is folded in: it builds itineraries and surfaces booking deep-links, and never books for you.",
           "tags": [
-            "fast tier",
+            "premium tier",
             "delegated"
           ]
         },
         {
-          "name": "Concierge",
+          "name": "Perks",
           "accent": "emerald",
-          "blurb": "\"Find a Mexican place near home\", \"plan this errand route\". Backed by a maps and places provider, it geocodes against a discard-after-use home base and is held to a hard daily cap. Locked to an exec allowlist of a few scripts -- no web, mail or shell beyond them.",
+          "blurb": "Knows every perk on the cards in your wallet. Ask \"which card for this purchase?\" and it answers from the fine print -- including which statement credits you haven't used yet. Read-only: it advises, never spends.",
           "tags": [
-            "premium tier",
+            "fast tier",
             "delegated"
           ]
         }
