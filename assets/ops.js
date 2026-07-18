@@ -77,7 +77,7 @@
     var strip = el('div', 'ops-strip');
     var tiles = [
       { ac: 'violet',  k: 'Agents',  v: '12' },
-      { ac: 'sky',     k: 'Channels', v: '3' },
+      { ac: 'sky',     k: 'Channels', v: '2' },
       { ac: 'emerald', k: 'Gateway', v: 'healthy', dot: true },
       { ac: 'sky',     k: 'Uptime',  v: '36d' }
     ];
