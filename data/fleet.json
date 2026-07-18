@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-11",
+  "generated": "2026-07-18",
   "tiers": [
     {
       "name": "hub",
@@ -44,24 +44,6 @@
           "tags": [
             "fast tier",
             "delegated"
-          ]
-        },
-        {
-          "name": "Ledger",
-          "accent": "amber",
-          "blurb": "Journals intraday-momentum decisions, never trades. Withdraw/transfer denied at the tool gate; live trading is architecturally locked.",
-          "tags": [
-            "fast tier",
-            "every 15m"
-          ]
-        },
-        {
-          "name": "Overseer",
-          "accent": "sky",
-          "blurb": "The senior troubleshooter — a more powerful reasoning agent brought in for the hardest, most sensitive system problems.",
-          "tags": [
-            "heavier reasoning",
-            "escalation"
           ]
         },
         {
@@ -124,20 +106,20 @@
       "name": "specialist",
       "agents": [
         {
+          "name": "Bursar",
+          "accent": "emerald",
+          "blurb": "Knows every perk on the cards in your wallet. Ask \"which card for this purchase?\" and it answers from the fine print -- and it watches statement credits so they get used, not wasted. Read-only: it advises, never spends.",
+          "tags": [
+            "fast tier",
+            "delegated"
+          ]
+        },
+        {
           "name": "Concierge",
           "accent": "emerald",
           "blurb": "\"Find a Mexican place near home\", \"plan this errand route\". Backed by a maps and places provider, it geocodes against a discard-after-use home base and is held to a hard daily cap. Locked to an exec allowlist of a few scripts -- no web, mail or shell beyond them.",
           "tags": [
             "premium tier",
-            "delegated"
-          ]
-        },
-        {
-          "name": "Sous",
-          "accent": "emerald",
-          "blurb": "Forward a short cooking video and it learns the recipe and files it in your recipe box, then feeds a topic signal into the morning ranking.",
-          "tags": [
-            "fast tier",
             "delegated"
           ]
         }
