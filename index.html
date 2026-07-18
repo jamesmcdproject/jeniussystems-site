@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-rAMkPOizbx/eHVWPw7mNOnECA1jPwwntwFe1AUjs+xg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>jenius Systems — Architecture</title>
-<meta name="description" content="jenius Systems — a self-hosted fleet of AI agents. Email, messaging, health, a shadow crypto trader, a marketplace appraiser, a read-only calendar and a places concierge, all behind one hardened gateway.">
+<meta name="description" content="jenius Systems — a self-hosted fleet of AI agents. Email, messaging, health, credit-card perks, a marketplace appraiser, a read-only calendar and a places concierge, all behind one hardened gateway.">
 
 <!-- Open Graph / social share -->
 <meta property="og:type" content="website" />
@@ -113,7 +113,7 @@
   <a href="#roadmap" class="mob-link opacity-0 translate-y-6">Roadmap</a>
 </div>
 
-<!-- ===== Mission-Control tab nav (progressive enhancement) ===== -->
+<!-- ===== Section tab nav (progressive enhancement) ===== -->
 <nav id="mc-tabs" aria-label="Sections">
   <button data-tab="overview">Overview</button>
   <button data-tab="fleet">The Fleet</button>
@@ -135,19 +135,19 @@
       <span class="brand-j">j</span>enius Systems
     </h1>
     <p class="reveal mt-7 max-w-2xl text-lg md:text-2xl text-white/60 leading-relaxed font-light">
-      A self-hosted fleet of <span class="text-white font-normal">AI agents</span> — handling email, messaging, health, a shadow crypto trader, a marketplace appraiser, a read-only calendar and a places concierge, all behind a single hardened gateway.
+      A self-hosted fleet of <span class="text-white font-normal">AI agents</span> — handling email, messaging, health, credit-card perks, a marketplace appraiser, a read-only calendar and a places concierge, all behind a single hardened gateway.
     </p>
 
     <div class="reveal mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl">
       <div class="glass hairline rounded-[1.4rem] p-1.5">
         <div class="innercore rounded-[calc(1.4rem-0.375rem)] bg-white/[0.02] px-5 py-5">
-          <div id="stat-agents" class="font-display text-4xl font-semibold">13</div>
+          <div id="stat-agents" class="font-display text-4xl font-semibold">12</div>
           <div class="text-xs text-white/45 mt-1">Agents</div>
         </div>
       </div>
       <div class="glass hairline rounded-[1.4rem] p-1.5">
         <div class="innercore rounded-[calc(1.4rem-0.375rem)] bg-white/[0.02] px-5 py-5">
-          <div class="font-display text-4xl font-semibold">3</div>
+          <div class="font-display text-4xl font-semibold">2</div>
           <div class="text-xs text-white/45 mt-1">Channels</div>
         </div>
       </div>
@@ -179,7 +179,7 @@
         <div class="innercore rounded-[calc(2rem-0.375rem)] bg-white/[0.02] p-8 h-full">
           <div class="text-violet-300/80 eyebrow">The brain</div>
           <h3 class="font-display text-2xl font-semibold mt-2">The Gateway</h3>
-          <p class="text-white/55 mt-3 font-light leading-relaxed">A single token-authenticated process, loopback-only. It routes every channel event to the right agent, dispatches the model call for that agent, and enforces per-agent tool gates and exec-approvals on the way out.</p>
+          <p class="text-white/55 mt-3 font-light leading-relaxed">A single token-authenticated process, loopback-only. It routes every channel event to the right agent, dispatches the model call for that agent, and enforces per-agent tool gates and exec-approvals on the way out. If a model tier fails, the request falls through an automatic cross-provider chain — resilience is wired into the routing itself, not a standing escalation agent.</p>
         </div>
       </div>
       <div class="reveal md:col-span-5 glass hairline rounded-[2rem] p-1.5">
@@ -193,7 +193,7 @@
         <div class="innercore rounded-[calc(2rem-0.375rem)] bg-white/[0.02] p-8 h-full">
           <div class="text-sky-300/80 eyebrow">Scheduling</div>
           <h3 class="font-display text-xl font-semibold mt-2">Always-on services</h3>
-          <p class="text-white/55 mt-3 font-light text-sm leading-relaxed">System services survive reboot &amp; logout — gateway, dashboard, mail poller, morning digest, two Steward audits, health, cost aggregator, auth watchdog, and the trading trio.</p>
+          <p class="text-white/55 mt-3 font-light text-sm leading-relaxed">System services survive reboot &amp; logout — gateway, dashboard, mail poller, morning digest, two Steward audits, health, cost aggregator, auth watchdog, and the on-device local-model services.</p>
         </div>
       </div>
       <div class="reveal md:col-span-4 glass hairline rounded-[2rem] p-1.5">
@@ -237,9 +237,9 @@
         <div class="md:w-1/3">
           <span class="eyebrow text-violet-300/70">Hub</span>
           <h3 class="font-display text-3xl font-semibold mt-2">Atlas</h3>
-          <div class="font-mono text-xs text-violet-200/70 mt-2">fast tier · messaging · SMS / voice</div>
+          <div class="font-mono text-xs text-violet-200/70 mt-2">fast tier · messaging</div>
         </div>
-        <p class="md:w-2/3 text-white/60 font-light leading-relaxed">The conversational front. Talks to the operator, holds personal-context memory, and delegates to the specialists. Atlas's primary push channel is a messaging app, with a fallback channel behind it. An <span class="text-white">SMS / voice bridge</span> lets you call or text the same agent — Atlas is the brain behind the call, not a separate one.</p>
+        <p class="md:w-2/3 text-white/60 font-light leading-relaxed">The conversational front. Talks to the operator, holds personal-context memory, and delegates to the specialists. Atlas's primary push channel is a messaging app, with a fallback channel behind it. An <span class="text-white">SMS / voice bridge</span> is built and gated — once armed, calling or texting reaches the same agent, with Atlas as the brain behind the call.</p>
       </div>
     </div>
 
@@ -249,7 +249,7 @@
         <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
           <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Sentinel</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
           <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · messaging</div>
-          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">The approval gate. Tier-based: routine auto-approves, sensitive escalates, system-tier identity edits require a one-time code.</p>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">The approval gate. Tier-based: routine auto-approves, sensitive escalates to the operator's phone for a one-tap decision, system-tier identity edits require a one-time code.</p>
         </div>
       </div>
       <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
@@ -277,7 +277,7 @@
         <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
           <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Aurora</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
           <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · daily 7:00</div>
-          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Daily digest from email, calendar, memory and your health data, delivered to your phone.</p>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Daily digest from email, calendar, memory and your health data, delivered to your phone. Anything it reports as shipped is backed by a verified receipt, not a claim.</p>
         </div>
       </div>
       <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
@@ -289,23 +289,9 @@
       </div>
       <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
         <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
-          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Overseer</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
-          <div class="font-mono text-[11px] text-sky-200/60 mt-1">heavier reasoning · escalation</div>
-          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Heavier-reasoning Steward lane reserved for sensitive system-tier diagnostics.</p>
-        </div>
-      </div>
-      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
-        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
           <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Pulse</h4><span class="h-2 w-2 rounded-full bg-sky-400"></span></div>
           <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · daily 7:15</div>
           <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Personal health-log curator. Append-only journaling from your wearable; sensitive-tier by default.</p>
-        </div>
-      </div>
-      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
-        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
-          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Ledger</h4><span class="text-[10px] rounded-full bg-amber-400/15 text-amber-300 px-2 py-0.5">shadow</span></div>
-          <div class="font-mono text-[11px] text-sky-200/60 mt-1">fast tier · every 15m</div>
-          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Journals intraday-momentum decisions, never trades. Withdraw/transfer denied at the tool gate; live trading is architecturally locked.</p>
         </div>
       </div>
       <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
@@ -332,39 +318,17 @@
           <h3 class="font-display text-3xl font-semibold mt-2">Concierge</h3>
           <div class="font-mono text-xs text-emerald-200/70 mt-2">premium tier · delegated</div>
         </div>
-        <p class="md:w-2/3 text-white/60 font-light leading-relaxed">"Find a mexican place near home", "plan this errand route". Backed by a maps &amp; places provider, it geocodes against a discard-after-use home base and is held to a <span class="text-white">hard daily cap</span>. Locked to an <span class="text-white">exec allowlist</span> of a few scripts — no web, mail or shell beyond them.</p>
+        <p class="md:w-2/3 text-white/60 font-light leading-relaxed">"Find a mexican place near home", "plan this errand route". Backed by a maps &amp; places provider, it geocodes against a discard-after-use home base and is held to a <span class="text-white">hard daily cap</span>. Locked to an <span class="text-white">exec allowlist</span> of a few scripts — no web, mail or shell beyond them. Trip planning is folded in: it builds itineraries and surfaces booking deep-links, and never books for you.</p>
       </div>
     </div>
 
-    <!-- SPECIALIST · Sous (live) -->
+    <!-- SPECIALIST · Perks (live) -->
     <div class="grid grid-cols-1 gap-3 mt-3">
       <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
         <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
-          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Sous</h4><span class="text-[10px] rounded-full bg-emerald-400/15 text-emerald-300 px-2 py-0.5">specialist</span></div>
+          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Perks</h4><span class="text-[10px] rounded-full bg-emerald-400/15 text-emerald-300 px-2 py-0.5">specialist</span></div>
           <div class="font-mono text-[11px] text-emerald-200/60 mt-1">fast tier · delegated</div>
-          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Forward a short video and it learns what you cook — files the recipe and feeds a topic signal into the morning ranking. Untrusted-caption contained.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- REPO-ONLY (built, gated on deploy) -->
-    <div class="reveal mt-12 mb-5 flex items-baseline gap-3">
-      <span class="eyebrow text-white/40">Built &amp; gated — not yet deployed</span>
-      <span class="h-px flex-1 bg-white/8"></span>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
-        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
-          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Voyage</h4><span class="text-[10px] rounded-full bg-sky-400/15 text-sky-300 px-2 py-0.5">sentinel-gated</span></div>
-          <div class="font-mono text-[11px] text-sky-200/60 mt-1">premium tier · built</div>
-          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Destination-agnostic trip planner. Builds itineraries and surfaces booking deep-links — it never books for you.</p>
-        </div>
-      </div>
-      <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
-        <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-6 h-full">
-          <div class="flex items-center justify-between"><h4 class="font-display text-lg font-semibold">Perks</h4><span class="text-[10px] rounded-full bg-amber-400/15 text-amber-300 px-2 py-0.5">sentinel-gated</span></div>
-          <div class="font-mono text-[11px] text-amber-200/60 mt-1">premium tier · built</div>
-          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Tracks credit-card perks and reminds you which benefit fits. You tell it what you used — no account linking, no money movement.</p>
+          <p class="text-white/50 text-sm mt-3 font-light leading-relaxed">Knows every perk on the cards in your wallet. Ask "which card for this purchase?" and it answers from the fine print — including which statement credits you haven't used yet. Read-only: it advises, never spends.</p>
         </div>
       </div>
     </div>
@@ -393,7 +357,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div class="glass hairline rounded-2xl py-4 text-center"><div class="font-display font-semibold">Messaging</div><div class="text-[11px] text-emerald-300/70 mt-0.5">Atlas · primary</div></div>
           <div class="glass hairline rounded-2xl py-4 text-center"><div class="font-display font-semibold">Fallback chat</div><div class="text-[11px] text-white/40 mt-0.5">Atlas + Sentinel</div></div>
-          <div class="glass hairline rounded-2xl py-4 text-center"><div class="font-display font-semibold">SMS / voice</div><div class="text-[11px] text-white/40 mt-0.5">Atlas · bridge</div></div>
+          <div class="glass hairline rounded-2xl py-4 text-center"><div class="font-display font-semibold">SMS / voice</div><div class="text-[11px] text-white/40 mt-0.5">bridge · built, gated</div></div>
         </div>
       </div>
       <div class="reveal w-full max-w-2xl relative lane-link">
@@ -419,12 +383,10 @@
           <span class="glass hairline rounded-full px-4 py-2 text-sm">Relay</span>
           <span class="glass hairline rounded-full px-4 py-2 text-sm">Scout / Envoy</span>
           <span class="glass hairline rounded-full px-4 py-2 text-sm">Aurora · Steward · Pulse</span>
-          <span class="glass hairline rounded-full px-4 py-2 text-sm">Ledger</span>
           <span class="glass hairline rounded-full px-4 py-2 text-sm text-emerald-200/90">Concierge</span>
           <span class="glass hairline rounded-full px-4 py-2 text-sm text-emerald-200/90">Verdict</span>
           <span class="glass hairline rounded-full px-4 py-2 text-sm text-emerald-200/90">Horizon</span>
-          <span class="glass hairline rounded-full px-4 py-2 text-sm text-emerald-200/90">Sous</span>
-          <span class="glass hairline rounded-full px-4 py-2 text-sm text-white/40">Voyage · Perks <span class="text-[10px]">· gated</span></span>
+          <span class="glass hairline rounded-full px-4 py-2 text-sm text-emerald-200/90">Perks</span>
         </div>
       </div>
       <div class="reveal w-full max-w-3xl">
@@ -434,7 +396,7 @@
           <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Email &amp; calendar</div><div class="text-[11px] text-white/40">read / draft</div></div>
           <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Maps &amp; places</div><div class="text-[11px] text-white/40">concierge</div></div>
           <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Health data</div><div class="text-[11px] text-white/40">wearable</div></div>
-          <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Crypto exchange</div><div class="text-[11px] text-white/40">shadow only</div></div>
+          <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Messaging platform</div><div class="text-[11px] text-white/40">chat · phone approvals</div></div>
           <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">Encrypted network</div><div class="text-[11px] text-white/40">control plane</div></div>
         </div>
       </div>
@@ -455,7 +417,7 @@
               <div class="glass hairline rounded-2xl py-4"><div class="font-display text-sm font-semibold">On-device vector store</div><div class="text-[11px] text-white/40">private recall</div></div>
             </div>
             <p class="text-white/55 text-sm mt-5 font-light leading-relaxed text-center max-w-2xl mx-auto">
-              Private semantic recall at <span class="text-white">zero marginal cost</span> — sensitive context is embedded and judged <span class="text-white">on-device</span>, never sent to a third-party API. The gateway reaches it locally, and the dashboard renders the live memory-sphere over a same-origin proxy.
+              Private semantic recall at <span class="text-white">zero marginal cost</span> — sensitive context is embedded and judged <span class="text-white">on-device</span>, never sent to a third-party API. The gateway reaches it locally, and the dashboard renders the live memory-sphere over a same-origin proxy. Scheduled internal traffic now routes to the small local model <span class="text-white">first</span>, with heavier work still going to the cloud tiers, and a background watcher transcribes and tags forwarded videos on-device.
             </p>
           </div>
         </div>
@@ -484,8 +446,8 @@
           The operations console shows fleet status, the on-device brain's activity and a running feed of agent actions. The interactive preview needs JavaScript; what follows is a static illustration.
         </p>
         <div class="ops-strip">
-          <div class="ops-tile" data-ac="violet"><div class="ops-tile-top"><span class="ops-dot"></span><span class="ops-tile-key">Agents</span></div><div class="ops-tile-val">14</div></div>
-          <div class="ops-tile" data-ac="sky"><div class="ops-tile-top"><span class="ops-dot"></span><span class="ops-tile-key">Channels</span></div><div class="ops-tile-val">4</div></div>
+          <div class="ops-tile" data-ac="violet"><div class="ops-tile-top"><span class="ops-dot"></span><span class="ops-tile-key">Agents</span></div><div class="ops-tile-val">12</div></div>
+          <div class="ops-tile" data-ac="sky"><div class="ops-tile-top"><span class="ops-dot"></span><span class="ops-tile-key">Channels</span></div><div class="ops-tile-val">2</div></div>
           <div class="ops-tile" data-ac="emerald"><div class="ops-tile-top"><span class="ops-dot"></span><span class="ops-tile-key">Gateway</span></div><div class="ops-tile-val">healthy</div></div>
           <div class="ops-tile" data-ac="sky"><div class="ops-tile-top"><span class="ops-dot"></span><span class="ops-tile-key">Uptime</span></div><div class="ops-tile-val">36d</div></div>
         </div>
@@ -520,7 +482,7 @@
         <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
           <div class="eyebrow text-rose-300/70">Layer 3</div>
           <h3 class="font-display text-xl font-semibold mt-2">Kill switches + one-time code</h3>
-          <p class="text-white/55 text-sm mt-3 font-light leading-relaxed">Self-mod and trading each have a one-flag kill switch. System-tier writes demand a one-time code from a separate device.</p>
+          <p class="text-white/55 text-sm mt-3 font-light leading-relaxed">Self-modification has a one-flag kill switch, and every gated action checks a fleet-wide halt flag before it runs. System-tier writes demand a one-time code from a separate device.</p>
         </div>
       </div>
     </div>
@@ -575,7 +537,7 @@
   <!-- ===== ROADMAP ===== -->
   <section id="roadmap" class="max-w-4xl mx-auto px-6 md:px-10 py-24 scroll-mt-24">
     <div class="reveal mb-12">
-      <span class="eyebrow text-white/40">06 — Shipped &amp; next</span>
+      <span class="eyebrow text-white/40">06 — What's next</span>
       <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-tight mt-3">What's next</h2>
       <p class="text-white/55 mt-4 max-w-2xl font-light">The platform is built to extend itself through the same gated chain it uses today. Everything below is planned work, in rough priority order.</p>
     </div>
@@ -584,14 +546,14 @@
         <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
           <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-white/10 text-white/70 px-2.5 py-0.5">Queued</span></div>
           <h3 class="font-display text-lg font-semibold mt-3">Specialist expansion</h3>
-          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Voice and phone-call access, travel planning, card-benefits tracking, and a personal style curator — each installable through the gated self-mod chain, never bypassing Sentinel.</p>
+          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Voice and phone-call access and a personal style curator — each installable through the gated self-mod chain, never bypassing Sentinel.</p>
         </div>
       </div>
       <div class="reveal glass hairline rounded-[1.6rem] p-1.5">
         <div class="innercore rounded-[calc(1.6rem-0.375rem)] bg-white/[0.02] p-7 h-full">
           <div class="flex items-center gap-2"><span class="text-[10px] rounded-full bg-white/10 text-white/70 px-2.5 py-0.5">Queued</span></div>
-          <h3 class="font-display text-lg font-semibold mt-3">Coaching layer</h3>
-          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Goal-aware coaching across health and habits — streaks, accountability and gentle course-correction, built on the signals the fleet already sees.</p>
+          <h3 class="font-display text-lg font-semibold mt-3">Anticipation layer</h3>
+          <p class="text-white/55 text-sm mt-2 font-light leading-relaxed">Learned relevance — the fleet surfaces what matters before it's asked, ranked from the same signals it already sees, behind the same gates.</p>
         </div>
       </div>
     </div>
