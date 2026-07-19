@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-18",
+  "generated": "2026-07-19",
   "tiers": [
     {
       "name": "hub",
@@ -88,15 +88,6 @@
           "tags": [
             "fast tier",
             "twice daily"
-          ]
-        },
-        {
-          "name": "Verdict",
-          "accent": "amber",
-          "blurb": "Paste a marketplace listing for a fair-price read and a scam-risk flag. Estimates only -- never messages a seller or moves money.",
-          "tags": [
-            "fast tier",
-            "paste-in"
           ]
         }
       ]
