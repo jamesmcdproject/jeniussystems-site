@@ -103,7 +103,7 @@
     }
   }
 
-  fetch('data/fleet.json', { cache: 'no-store' })
+  fetch('/data/fleet.json', { cache: 'no-store' })
     .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
     .then(render)
     .catch(function () { /* leave the static fallback cards untouched */ });

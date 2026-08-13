@@ -1,0 +1,156 @@
+/* jeniussystems.ai — mostly-blank light landing. Hand-written, no build step, no JS.
+   Voice: personal, lowercase, OpenDyslexic wordmark. Shared by /, /built/, /404.
+   Fonts are self-hosted (OpenDyslexic, SIL OFL license — see assets/fonts/). */
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("/assets/fonts/OpenDyslexic-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("/assets/fonts/OpenDyslexic-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --paper: #fbfaf8;
+  --ink: #23231f;
+  --muted: #66665e;
+  --faint: #8f8f85;
+  --hairline: rgba(35, 35, 31, 0.14);
+  --live: #0b7a52;
+  --live-soft: rgba(11, 122, 82, 0.09);
+  --od: "OpenDyslexic", "Comic Sans MS", system-ui, sans-serif;
+  --body: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16.5px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+::selection { background: rgba(11, 122, 82, 0.16); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+
+a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--faint); }
+a:hover { text-decoration-color: var(--ink); }
+
+.skip { position: absolute; left: -9999px; top: 0; background: var(--ink); color: var(--paper); padding: 8px 14px; font-size: 14px; }
+.skip:focus { left: 0; }
+
+.page { max-width: 640px; margin: 0 auto; padding: 0 24px; }
+
+/* ===== Hero ===== */
+.hero { padding-top: clamp(5rem, 17vh, 10rem); }
+.wordmark {
+  font-family: var(--od);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 5.6vw, 2.9rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.wordmark a { text-decoration: none; }
+.tagline {
+  font-family: var(--od);
+  font-style: italic;
+  color: var(--muted);
+  font-size: clamp(0.98rem, 2.4vw, 1.08rem);
+  line-height: 1.85;
+  max-width: 56ch;
+  margin-top: 22px;
+}
+
+/* ===== Builds list ===== */
+.builds-section { margin-top: clamp(3.5rem, 9vh, 5.5rem); }
+.tiny-label {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.builds { list-style: none; margin-top: 10px; }
+.builds > li { padding: 26px 0; border-bottom: 1px solid var(--hairline); }
+.builds > li:first-child { border-top: 1px solid var(--hairline); }
+.build-line { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; }
+.build-line a {
+  font-family: var(--od);
+  font-size: 1.12rem;
+  line-height: 1.4;
+}
+.chip {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 3px 10px;
+  color: var(--faint);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.chip-live { color: var(--live); border-color: rgba(11, 122, 82, 0.35); background: var(--live-soft); }
+.chip-live::before { content: ""; width: 5px; height: 5px; border-radius: 999px; background: var(--live); }
+.build-desc { color: var(--muted); font-size: 0.95rem; max-width: 58ch; margin-top: 8px; }
+
+/* ===== Footer ===== */
+.foot {
+  margin-top: clamp(4rem, 12vh, 7rem);
+  padding: 22px 0 48px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  line-height: 2;
+}
+
+/* ===== Article pages (/built/) ===== */
+.crumb { padding-top: clamp(2.5rem, 7vh, 4rem); font-family: var(--mono); font-size: 12px; }
+.crumb a { color: var(--muted); }
+.article-hero { padding-top: clamp(2rem, 6vh, 3.5rem); }
+.article-hero .meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--faint); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.article-hero h1 { font-family: var(--od); font-weight: 400; font-size: clamp(1.6rem, 5vw, 2.3rem); margin-top: 16px; line-height: 1.25; }
+.article-hero .lede { color: var(--muted); margin-top: 18px; font-size: 1.02rem; max-width: 58ch; }
+.article-section { margin-top: clamp(2.6rem, 7vh, 4rem); }
+.article-section h2 { font-family: var(--od); font-weight: 400; font-size: 1.25rem; }
+.article-section ul { list-style: none; margin-top: 10px; }
+.article-section li {
+  color: var(--muted); font-size: 0.96rem; max-width: 62ch;
+  padding: 12px 0; border-bottom: 1px solid var(--hairline);
+  display: flex; gap: 12px; align-items: baseline;
+}
+.article-section li::before { content: "—"; color: var(--faint); font-family: var(--mono); font-size: 12px; flex: none; }
+.notice {
+  margin-top: clamp(2.6rem, 7vh, 4rem);
+  border: 1px solid var(--hairline); border-radius: 10px;
+  padding: 18px 22px; color: var(--muted); font-size: 0.95rem; background: #fff;
+}
+.notice strong { color: var(--ink); font-weight: 600; }
+
+/* ===== 404 ===== */
+.lost { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; }
+.lost .code { font-family: var(--mono); font-size: 12px; letter-spacing: 0.3em; color: var(--faint); }
+.lost h1 { font-family: var(--od); font-weight: 400; font-size: clamp(1.7rem, 5vw, 2.4rem); margin-top: 14px; }
+.lost p { color: var(--muted); margin-top: 14px; }
+.lost .links { margin-top: 10px; }
+.lost .links a { margin-right: 18px; font-family: var(--od); font-size: 1.02rem; }
+
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .builds > li { padding: 22px 0; }
+}
