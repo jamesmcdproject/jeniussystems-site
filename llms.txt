@@ -1,9 +1,9 @@
 # jenius Systems
 
 > A one-operator AI-systems studio: one human sets direction, a fleet of AI agents designs,
-> builds, tests, and reviews the software. Three systems are live today.
+> builds, tests, and reviews the software. Three systems, each labeled with its true status.
 
-Everything listed is real and running; anything private is labeled private.
+Everything listed is real; anything private or in-rebuild is labeled as such.
 
 ## Systems
 
@@ -11,7 +11,7 @@ Everything listed is real and running; anything private is labeled private.
   shared screen, with phones as gamepads (join by QR code). Live and free to play.
 - [The Fleet — architecture sandbox](https://jeniussystems.ai/sandbox/): a sanitized architecture
   overview of the studio's self-hosted fleet of AI agents (mail, health, calendar, concierge and
-  more) behind one hardened gateway.
+  more) behind one hardened gateway; the fleet is currently being rebuilt for its second iteration.
 - [BMC Development — case notes](https://jeniussystems.ai/built/): a construction-finance platform
   (PDF+OCR invoice intake, approval routing, dual budgets, draw packages). Private pilot; not
   publicly accessible.

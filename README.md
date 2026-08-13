@@ -9,7 +9,7 @@ main deploys). No build step — every file here is served as-is.
 | --- | --- |
 | `/` (`index.html` + `assets/hub.*`) | Hub landing page: studio hero + project grid. |
 | `/built/` | BMC Development case notes (no public app exists). |
-| `/sandbox/` | The fleet architecture overview (the pre-2026-08 site, moved verbatim). |
+| `/sandbox/` | The fleet architecture overview (the pre-2026-08 site; body untouched, head/nav adapted — its pinned inline-script hash is byte-identical). |
 | `/data/fleet.json` | **Contract path** — written by a private roster-sync pipeline that lives outside this repo. Must stay at the repo root; `/sandbox/` fetches it absolutely. |
 | `404.html`, `robots.txt`, `sitemap.xml`, `llms.txt` | Root meta files. |
 
