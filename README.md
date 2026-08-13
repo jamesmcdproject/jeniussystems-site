@@ -8,7 +8,7 @@ main deploys). No build step — every file here is served as-is.
 | Path | What it is |
 | --- | --- |
 | `/` (`index.html` + `assets/hub.css`) | Landing page: OpenDyslexic wordmark + tagline + builds list. Zero JS. |
-| `/built/` | construction draw management — case notes (app is a private pilot, no public URL). |
+| `/built/` | construction draw management — case notes (app at bmc.jeniussystems.ai, behind Cloudflare Access; login link only). |
 | `/sandbox/` | The fleet architecture overview (the pre-2026-08 site; body untouched, head/nav adapted — its pinned inline-script hash is byte-identical). |
 | `/data/fleet.json` | **Contract path** — written by a private roster-sync pipeline that lives outside this repo. Must stay at the repo root; `/sandbox/` fetches it absolutely. |
 | `404.html`, `robots.txt`, `sitemap.xml`, `llms.txt` | Root meta files. |
