@@ -7,8 +7,8 @@ Everything listed is real; anything private or in-rebuild is labeled as such.
 
 ## Systems
 
-- [Pico Park — Web Co-op](https://games.jeniussystems.ai/): a co-op party platformer played on one
-  shared screen, with phones as gamepads (join by QR code). Live and free to play.
+- [couch critters](https://games.jeniussystems.ai/): a co-op party platformer inspired by TeamO's
+  PICO PARK, played on one shared screen with phones as gamepads (join by QR code). Live and free to play.
 - [The Fleet — architecture sandbox](https://jeniussystems.ai/sandbox/): a sanitized architecture
   overview of the studio's self-hosted fleet of AI agents (mail, health, calendar, concierge and
   more) behind one hardened gateway; the fleet is currently being rebuilt for its second iteration.
