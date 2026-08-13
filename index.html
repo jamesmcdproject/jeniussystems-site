@@ -3,37 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Security: CSP via meta (HSTS/X-Frame-Options need a CDN pathway — see maint-001).
-     This page has ZERO inline JS and ZERO inline styles by design: script-src/style-src
-     stay 'self' with no hashes to maintain. Keep it that way when editing. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<!-- Security: strict CSP via meta; zero JS, zero inline styles, fonts self-hosted.
+     Keep script-src/style-src at 'self' when editing. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="theme-color" content="#0a0a0b">
+<meta name="theme-color" content="#fbfaf8">
 
-<title>jenius Systems — a one-operator AI-systems studio</title>
-<meta name="description" content="jenius Systems is a one-operator AI-systems studio: one human sets direction, a fleet of AI agents builds. In the open: a live co-op web party game, a construction-finance platform pilot, and the agent fleet's architecture sandbox.">
+<title>jeniussystems.ai — one human + a fleet of AI agents</title>
+<meta name="description" content="Self-exploration, knowledge-gathering, and a little fun: what one human and a fleet of AI agents have built — a live co-op web game, a construction-finance pilot, and the fleet's architecture sandbox.">
 
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="jenius Systems" />
-<meta property="og:title" content="jenius Systems — a one-operator AI-systems studio" />
-<meta property="og:description" content="One human sets direction. A fleet of AI agents builds. Three systems, honestly labeled." />
+<meta property="og:site_name" content="jeniussystems.ai" />
+<meta property="og:title" content="jeniussystems.ai" />
+<meta property="og:description" content="self-exploration, knowledge-gathering, and a little fun — showing what we've built better than I can explain in person. always evolving, seriously locked down." />
 <meta property="og:url" content="https://jeniussystems.ai/" />
 <meta property="og:image" content="https://jeniussystems.ai/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="jenius Systems — a one-operator AI-systems studio" />
-<meta name="twitter:description" content="One human sets direction. A fleet of AI agents builds. Three systems, honestly labeled." />
+<meta name="twitter:title" content="jeniussystems.ai" />
+<meta name="twitter:description" content="self-exploration, knowledge-gathering, and a little fun — showing what we've built better than I can explain in person." />
 <meta name="twitter:image" content="https://jeniussystems.ai/assets/og.png" />
 
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 <link rel="canonical" href="https://jeniussystems.ai/" />
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Parisienne&display=swap" rel="stylesheet">
+<link rel="preload" href="/assets/fonts/OpenDyslexic-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="/assets/hub.css">
-<script src="/assets/hub.js"></script>
 
 <script type="application/ld+json">
 {
@@ -49,11 +44,11 @@
     },
     {
       "@type": "ItemList",
-      "name": "Systems built by jenius Systems",
+      "name": "Builds by jenius Systems",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "item": { "@type": "VideoGame", "name": "Pico Park — Web Co-op", "url": "https://games.jeniussystems.ai/", "gamePlatform": "Web browser", "playMode": "CoOp", "operatingSystem": "Any" } },
-        { "@type": "ListItem", "position": 2, "item": { "@type": "WebSite", "name": "The Fleet — architecture sandbox", "url": "https://jeniussystems.ai/sandbox/" } },
-        { "@type": "ListItem", "position": 3, "item": { "@type": "WebApplication", "name": "BMC Development", "url": "https://jeniussystems.ai/built/", "applicationCategory": "BusinessApplication", "operatingSystem": "Self-hosted (private pilot)" } }
+        { "@type": "ListItem", "position": 1, "item": { "@type": "VideoGame", "name": "pico park — web co-op", "url": "https://games.jeniussystems.ai/", "gamePlatform": "Web browser", "playMode": "CoOp", "operatingSystem": "Any" } },
+        { "@type": "ListItem", "position": 2, "item": { "@type": "WebSite", "name": "the fleet — architecture sandbox", "url": "https://jeniussystems.ai/sandbox/" } },
+        { "@type": "ListItem", "position": 3, "item": { "@type": "WebApplication", "name": "bmc development", "url": "https://jeniussystems.ai/built/", "applicationCategory": "BusinessApplication", "operatingSystem": "Self-hosted (private pilot)" } }
       ]
     }
   ]
@@ -62,159 +57,69 @@
 </head>
 <body>
 
-<a class="skip" href="#work">Skip to the work</a>
-<div class="grain" aria-hidden="true"></div>
+<a class="skip" href="#builds">skip to the builds</a>
 
-<nav class="island" aria-label="Primary">
-  <a href="/" class="wordmark"><span class="live-dot" aria-hidden="true"></span><span class="brand-j">j</span>enius&nbsp;Systems</a>
-  <span class="island-spacer" aria-hidden="true"></span>
-  <a href="#work" class="island-link">Projects</a>
-  <span class="chip">03&nbsp;BUILDS</span>
-</nav>
+<main class="page">
 
-<main id="top">
-
-  <!-- ===== Hero ===== -->
   <header class="hero">
-    <p class="eyebrow reveal">AI-SYSTEMS&nbsp;STUDIO</p>
-    <h1 class="reveal">
-      One human sets direction.<br>
-      <span class="dim">A fleet of AI agents builds.</span>
-    </h1>
-    <p class="lede reveal">jenius Systems is a one-operator R&amp;D studio. The agents design, build,
-      test, and review; the human picks the problems. Everything below is real, and every
-      status label is honest.</p>
-    <div class="cta-row reveal">
-      <a class="btn btn-primary" href="#work">See the work<span class="btn-orb" aria-hidden="true">↓</span></a>
-      <a class="btn btn-ghost" href="/sandbox/">Tour the fleet<span class="btn-orb" aria-hidden="true">→</span></a>
-    </div>
-    <p class="metaline reveal" aria-label="Studio status">03&nbsp;SYSTEMS&nbsp;·&nbsp;SELF-HOSTED&nbsp;·&nbsp;AGENT-BUILT</p>
+    <h1 class="wordmark">jeniussystems.ai</h1>
+    <p class="tagline">self-exploration, knowledge-gathering, and a little fun&nbsp;— showing
+      what we've built better than I can explain in person. always evolving, seriously
+      locked&nbsp;down.</p>
   </header>
 
-  <!-- ===== Projects ===== -->
-  <section id="work" class="work" aria-labelledby="work-h">
-    <p class="eyebrow reveal">THE&nbsp;WORK</p>
-    <h2 id="work-h" class="reveal">Three systems, three stages.</h2>
+  <section id="builds" class="builds-section" aria-label="The builds">
+    <h2 class="tiny-label">the builds</h2>
+    <ul class="builds">
 
-    <div class="grid">
+      <li>
+        <p class="build-line">
+          <a href="https://games.jeniussystems.ai/" target="_blank" rel="noopener">pico park — web co-op&nbsp;↗</a>
+          <span class="chip chip-live">LIVE</span>
+        </p>
+        <p class="build-desc">a fan homage to TeamO's PICO PARK. the TV runs the game; every
+          phone becomes a gamepad — scan a QR code and you're in.</p>
+      </li>
 
-      <!-- 01 · Pico Park -->
-      <article class="card card-feature reveal">
-        <a class="card-link" href="https://games.jeniussystems.ai/" target="_blank" rel="noopener" aria-label="Play Pico Park Web Co-op — opens the live game in a new tab">
-          <div class="bezel">
-            <div class="bezel-core">
-              <img src="/assets/shots/pico.jpg" alt="Pico Park web co-op — the host screen with a joinable room" width="1200" height="750" fetchpriority="high">
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="card-meta"><span class="idx">01</span> GAME <span class="badge badge-live"><span class="badge-dot" aria-hidden="true"></span>LIVE</span></p>
-            <h3>Pico Park — Web&nbsp;Co-op</h3>
-            <p class="card-desc">A fan homage to TeamO's PICO PARK, rebuilt for the living room.
-              The TV runs the game; every phone becomes a gamepad — scan a QR code and you're in.
-              Real-time rooms on edge infrastructure, tuned for phone latency.</p>
-            <span class="btn btn-card">Play it<span class="btn-orb" aria-hidden="true">↗</span></span>
-          </div>
-        </a>
-      </article>
+      <li>
+        <p class="build-line">
+          <a href="/sandbox/">the fleet</a>
+          <span class="chip">R&amp;D SANDBOX</span>
+        </p>
+        <p class="build-desc">a self-hosted fleet of AI agents — mail, health, calendar,
+          concierge and more — behind one hardened gateway, being rebuilt for round two.
+          the architecture tour lives in the sandbox.</p>
+      </li>
 
-      <!-- 02 · The Fleet -->
-      <article class="card reveal">
-        <a class="card-link" href="/sandbox/" aria-label="Tour the fleet architecture in the R&D sandbox">
-          <div class="bezel">
-            <div class="bezel-core">
-              <img src="/assets/shots/fleet.jpg" alt="The fleet architecture overview — agent roster and topology" width="1200" height="750" loading="lazy">
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="card-meta"><span class="idx">02</span> INFRASTRUCTURE <span class="badge">R&amp;D SANDBOX</span></p>
-            <h3>The Fleet</h3>
-            <p class="card-desc">The engine room: a self-hosted fleet of AI agents — mail, health,
-              calendar, concierge and more — behind one hardened gateway, now being rebuilt for
-              its second iteration. The architecture tour lives in the sandbox.</p>
-            <span class="btn btn-card">Tour the architecture<span class="btn-orb" aria-hidden="true">→</span></span>
-          </div>
-        </a>
-      </article>
+      <li>
+        <p class="build-line">
+          <a href="/built/">bmc development</a>
+          <span class="chip">PRIVATE PILOT</span>
+        </p>
+        <p class="build-desc">construction finance, penny-exact: pdf invoices in, approved
+          draw packages out. private by design — case notes only.</p>
+      </li>
 
-      <!-- 03 · BMC Development -->
-      <article class="card card-wide reveal">
-        <a class="card-link card-link-row" href="/built/" aria-label="Read the BMC Development case notes">
-          <div class="card-body">
-            <p class="card-meta"><span class="idx">03</span> PLATFORM <span class="badge">PRIVATE PILOT</span></p>
-            <h3>BMC Development</h3>
-            <p class="card-desc">A construction-finance platform for a real-estate investment firm:
-              invoices arrive as PDFs, leave as approved, penny-exact draw packages. Running as a
-              private pilot — not publicly accessible, by design.</p>
-            <span class="btn btn-card">Case notes<span class="btn-orb" aria-hidden="true">→</span></span>
-          </div>
-          <dl class="spec" aria-label="Platform capabilities">
-            <div class="spec-row"><dt>INTAKE</dt><dd>PDF + OCR invoice pipeline</dd></div>
-            <div class="spec-row"><dt>CONTROL</dt><dd>Approval routing · dual budgets</dd></div>
-            <div class="spec-row"><dt>OUTPUT</dt><dd>Draw packages, export-ready</dd></div>
-            <div class="spec-row"><dt>PROOF</dt><dd>800+ automated tests</dd></div>
-          </dl>
-        </a>
-      </article>
+      <!-- ──────────────────────────────────────────────────────────
+           TEMPLATE — copy this block to add build 04+ (see README.md)
+      <li>
+        <p class="build-line">
+          <a href="URL">name</a>
+          <span class="chip">STATUS</span>
+        </p>
+        <p class="build-desc">one or two honest lowercase sentences.</p>
+      </li>
+      ────────────────────────────────────────────────────────── -->
 
-      <!-- ─────────────────────────────────────────────────────────────
-           TEMPLATE — copy this block to add project 04+ (see README.md).
-           Default span is half-width; add class "card-feature" for a
-           7-column feature card or "card-wide" for a full-width band.
-      <article class="card reveal">
-        <a class="card-link" href="URL" aria-label="LABEL">
-          <div class="bezel"><div class="bezel-core">
-            <img src="/assets/shots/NAME.jpg" alt="ALT" width="1200" height="750" loading="lazy">
-          </div></div>
-          <div class="card-body">
-            <p class="card-meta"><span class="idx">04</span> KIND <span class="badge">STATUS</span></p>
-            <h3>Name</h3>
-            <p class="card-desc">One or two honest sentences.</p>
-            <span class="btn btn-card">Action<span class="btn-orb" aria-hidden="true">→</span></span>
-          </div>
-        </a>
-      </article>
-      ───────────────────────────────────────────────────────────── -->
-
-    </div>
+    </ul>
   </section>
 
-  <!-- ===== Operating model ===== -->
-  <section class="model" aria-labelledby="model-h">
-    <p class="eyebrow reveal">HOW&nbsp;IT&nbsp;RUNS</p>
-    <h2 id="model-h" class="reveal">The operating model.</h2>
-    <div class="model-rows">
-      <div class="model-row reveal">
-        <span class="idx">01</span>
-        <h3>Direction</h3>
-        <p>A human picks the problems, sets the bar, and owns every irreversible call.</p>
-      </div>
-      <div class="model-row reveal">
-        <span class="idx">02</span>
-        <h3>Execution</h3>
-        <p>AI agents design, build, and test — in parallel, in review-gated waves.</p>
-      </div>
-      <div class="model-row reveal">
-        <span class="idx">03</span>
-        <h3>Review</h3>
-        <p>Substantial changes face an adversarial reviewer before they ship — its findings
-          reshape the work. This very page went through one.</p>
-      </div>
-    </div>
-  </section>
+  <footer class="foot">
+    one human + a fleet of AI agents · every status label is honest<br>
+    © 2026 jenius systems
+  </footer>
 
 </main>
-
-<footer>
-  <div class="foot-top">
-    <span class="wordmark"><span class="brand-j">j</span>enius&nbsp;Systems</span>
-    <nav class="foot-links" aria-label="Projects">
-      <a href="https://games.jeniussystems.ai/" target="_blank" rel="noopener">Pico Park</a>
-      <a href="/sandbox/">The Fleet</a>
-      <a href="/built/">BMC Development</a>
-    </nav>
-  </div>
-  <p class="foot-line">a personal AI-systems studio · © 2026 jenius Systems</p>
-</footer>
 
 </body>
 </html>
