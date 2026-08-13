@@ -12,7 +12,7 @@ Everything listed is real; anything private or in-rebuild is labeled as such.
 - [The Fleet — architecture sandbox](https://jeniussystems.ai/sandbox/): a sanitized architecture
   overview of the studio's self-hosted fleet of AI agents (mail, health, calendar, concierge and
   more) behind one hardened gateway; the fleet is currently being rebuilt for its second iteration.
-- [construction draw management — case notes](https://jeniussystems.ai/built/): a construction
+- [construction draw management — case notes](https://jeniussystems.ai/construction/): a construction
   draw management platform (PDF+OCR invoice intake, approval routing, dual budgets, draw packages).
   Private pilot; logins not available.
 
