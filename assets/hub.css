@@ -70,7 +70,7 @@ a:hover { text-decoration-color: var(--ink); }
   font-size: clamp(1.25rem, 3.6vw, 1.7rem);
   line-height: 1.4;
   margin-top: 26px;
-  max-width: 24ch;
+  max-width: 26ch;
   padding-left: 16px;
   border-left: 3px solid var(--live);
 }
@@ -155,7 +155,7 @@ a:hover { text-decoration-color: var(--ink); }
 .builds > li { padding: 26px 0; border-bottom: 1px solid var(--hairline); }
 .builds > li:first-child { border-top: 1px solid var(--hairline); }
 .build-line { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; }
-.build-line a {
+.build-line a, .build-name {
   font-family: var(--od);
   font-size: 1.12rem;
   line-height: 1.4;

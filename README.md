@@ -7,7 +7,7 @@ main deploys). No build step — every file here is served as-is.
 
 | Path | What it is |
 | --- | --- |
-| `/` (`index.html` + `assets/hub.css`) | Landing page: OpenDyslexic wordmark + statement, then three sections — "in the field" (deployments with spec sheets), "how the work goes" (method), "the proving ground" (games). Zero JS. |
+| `/` (`index.html` + `assets/hub.css`) | Landing page: OpenDyslexic wordmark + statement, then three sections — "the day job, automated" (finance builds), "how the work goes" (method), "off the clock" (games). Zero JS. |
 | `/construction/` | construction draw management — case notes (app at construction.jeniussystems.ai, behind Cloudflare Access; login link only). |
 | `/sandbox/` | The fleet architecture overview (the pre-2026-08 site; body untouched, head/nav adapted — its pinned inline-script hash is byte-identical). |
 | `/data/fleet.json` | **Contract path** — written by a private roster-sync pipeline that lives outside this repo. Must stay at the repo root; `/sandbox/` fetches it absolutely. |
@@ -15,8 +15,8 @@ main deploys). No build step — every file here is served as-is.
 
 ## Adding a build
 
-1. Copy the commented `TEMPLATE` `<li>` block in `index.html` into the right `.builds` list: "in the field" for real deployments (add an `.entry-no` line and a `.spec` list — site / runs on / proof / access), "the proving ground" for games and experiments. Update the counts in the hero `.status` strip.
-2. Pick an honest status chip: `LIVE` (add class `chip-live`), `PRIVATE PILOT`, `R&D SANDBOX`, or similar-but-true.
+1. Copy the commented `TEMPLATE` `<li>` block in `index.html` into the right `.builds` list: "the day job, automated" for finance/ops builds (add an `.entry-no` line; a `.spec` list is optional; use `<span class="build-name">` instead of a link while there is no page), "off the clock" for games. Update the counts in the hero `.status` strip.
+2. Pick an honest status chip: `LIVE` (add class `chip-live`), `PRIVATE PILOT`, `IN BUILD`, `R&D SANDBOX`, or similar-but-true.
 3. Add it to the JSON-LD list in `index.html` and to `llms.txt`; add the URL to `sitemap.xml` if it gets its own page here.
 4. Voice: lowercase, personal, one or two sentences — claim only what's real.
 
