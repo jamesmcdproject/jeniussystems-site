@@ -1,4 +1,4 @@
-/* jeniussystems.ai — mostly-blank light landing. Hand-written, no build step, no JS.
+/* jeniussystems.ai — light field-log landing. Hand-written, no build step, no JS.
    Voice: personal, lowercase, OpenDyslexic wordmark. Shared by /, /built/, /404.
    Fonts are self-hosted (OpenDyslexic, SIL OFL license — see assets/fonts/). */
 
@@ -34,6 +34,9 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   background: var(--paper);
+  /* faint field-notebook dot grid */
+  background-image: radial-gradient(rgba(35, 35, 31, 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
   color: var(--ink);
   font-family: var(--body);
   font-size: 16.5px;
@@ -50,10 +53,41 @@ a:hover { text-decoration-color: var(--ink); }
 .skip { position: absolute; left: -9999px; top: 0; background: var(--ink); color: var(--paper); padding: 8px 14px; font-size: 14px; }
 .skip:focus { left: 0; }
 
-.page { max-width: 640px; margin: 0 auto; padding: 0 24px; }
+.page { max-width: 700px; margin: 0 auto; padding: 0 24px; }
 
 /* ===== Hero ===== */
-.hero { padding-top: clamp(5rem, 17vh, 10rem); }
+.hero { padding-top: clamp(4rem, 13vh, 8rem); }
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 18px;
+}
+.statement {
+  font-family: var(--od);
+  font-size: clamp(1.25rem, 3.6vw, 1.7rem);
+  line-height: 1.4;
+  margin-top: 26px;
+  max-width: 26ch;
+  padding-left: 16px;
+  border-left: 3px solid var(--live);
+}
+.status {
+  list-style: none;
+  display: flex; flex-wrap: wrap; gap: 8px 22px;
+  margin-top: 30px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.status li { display: inline-flex; align-items: center; gap: 8px; }
+.status li::before { content: ""; width: 6px; height: 6px; border-radius: 999px; border: 1px solid var(--faint); }
+.status .is-live { color: var(--live); }
+.status .is-live::before { background: var(--live); border-color: var(--live); }
 .wordmark {
   font-family: var(--od);
   font-weight: 400;
@@ -73,7 +107,42 @@ a:hover { text-decoration-color: var(--ink); }
 }
 
 /* ===== Builds list ===== */
-.builds-section { margin-top: clamp(3.5rem, 9vh, 5.5rem); }
+.section { margin-top: clamp(3.5rem, 9vh, 5.5rem); }
+.section-note { color: var(--muted); font-size: 0.95rem; max-width: 58ch; margin: 12px 0 18px; }
+.entry-no {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 8px;
+}
+
+/* deployment spec sheet: mono key, plain value */
+.spec { margin-top: 16px; border-left: 1px solid var(--hairline); padding-left: 16px; }
+.spec > div { display: grid; grid-template-columns: 7.5ch 1fr; gap: 14px; padding: 3px 0; }
+.spec dt {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding-top: 4px;
+}
+.spec dd { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+/* method: numbered operating principles */
+.method { list-style: none; counter-reset: step; margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; border-top: 1px solid var(--hairline); }
+.method > li { counter-increment: step; padding: 22px 0; border-bottom: 1px solid var(--hairline); }
+.method > li::before {
+  content: "0" counter(step);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: var(--live);
+}
+.method h3 { font-family: var(--od); font-weight: 400; font-size: 1.02rem; line-height: 1.4; margin-top: 6px; }
+.method p { color: var(--muted); font-size: 0.92rem; line-height: 1.65; margin-top: 6px; }
 .tiny-label {
   font-family: var(--mono);
   font-weight: 400;
@@ -86,7 +155,7 @@ a:hover { text-decoration-color: var(--ink); }
 .builds > li { padding: 26px 0; border-bottom: 1px solid var(--hairline); }
 .builds > li:first-child { border-top: 1px solid var(--hairline); }
 .build-line { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; }
-.build-line a {
+.build-line a, .build-name {
   font-family: var(--od);
   font-size: 1.12rem;
   line-height: 1.4;
@@ -153,4 +222,6 @@ a:hover { text-decoration-color: var(--ink); }
 @media (max-width: 480px) {
   body { font-size: 16px; }
   .builds > li { padding: 22px 0; }
+  .method { grid-template-columns: 1fr; }
+  .spec > div { grid-template-columns: 1fr; gap: 0; padding: 5px 0; }
 }
