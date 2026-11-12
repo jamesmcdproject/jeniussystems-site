@@ -1,20 +1,28 @@
 # jenius Systems
 
-> A one-operator AI-systems studio: one human sets direction, a fleet of AI agents designs,
-> builds, tests, and reviews the software. Three systems, each labeled with its true status.
+> A one-operator AI-systems studio that works forward-deployed: one human goes to the problem and
+> sets direction, a fleet of AI agents designs, builds, tests, and reviews the software. Four
+> systems, each labeled with its true status.
 
 Everything listed is real; anything private or in-rebuild is labeled as such.
 
-## Systems
+## In the field
 
-- [couch critters](https://games.jeniussystems.ai/): a co-op party platformer inspired by TeamO's
-  PICO PARK, played on one shared screen with phones as gamepads (join by QR code). Live and free to play.
+- [construction draw management — case notes](https://jeniussystems.ai/construction/): a construction
+  draw management platform (PDF+OCR invoice intake, approval routing, dual budgets, draw packages)
+  for a real-estate investment firm's construction team, self-hosted on hardware the firm controls.
+  Private pilot; logins not available.
 - [The Fleet — architecture sandbox](https://jeniussystems.ai/sandbox/): a sanitized architecture
   overview of the studio's self-hosted fleet of AI agents (mail, health, calendar, concierge and
   more) behind one hardened gateway; the fleet is currently being rebuilt for its second iteration.
-- [construction draw management — case notes](https://jeniussystems.ai/construction/): a construction
-  draw management platform (PDF+OCR invoice intake, approval routing, dual budgets, draw packages).
-  Private pilot; logins not available.
+
+## The proving ground (games)
+
+- [couch critters](https://games.jeniussystems.ai/): a co-op party platformer inspired by TeamO's
+  PICO PARK, played on one shared screen with phones as gamepads (join by QR code). Live and free to play.
+- [kart rush](https://kart.jeniussystems.ai/): a living-room kart racer; the TV runs the race and
+  phones are the steering wheels (tilt to steer, flick to drift), up to four drivers split-screen
+  with AI filling the grid. Live and free to play.
 
 ## Notes
 
