@@ -56,16 +56,16 @@
     <p class="meta">ON MY OWN TIME · PERSONAL ASSISTANT V2 <span class="chip chip-live">PHASE 1 LIVE</span></p>
     <h1>an assistant I can vouch&nbsp;for.</h1>
     <p class="lede">v1 was a fleet of agents behind a gateway. it went down, quietly, and
-      stayed down for weeks before anyone noticed. so v2 was built the other way
+      stayed down for weeks before I noticed. so v2 was built the other way
       round: <strong>the alarm first, then the assistant.</strong> I don't need to know
       how every part works. I need to know what it can't do without me, and how
       I'd catch it failing.</p>
 
     <ul class="facts" aria-label="Where it stands">
-      <li class="is-live"><b>nov 11</b><span>phase one live</span></li>
-      <li><b>5,300+</b><span>automated tests</span></li>
-      <li><b>2</b><span>independent reviews per change</span></li>
-      <li><b>1</b><span>human, holding the switch</span></li>
+      <li class="is-live"><b>nov 11</b> <span>phase one live</span></li>
+      <li><b>5,300+</b> <span>automated tests</span></li>
+      <li><b>2</b> <span>independent reviews per change</span></li>
+      <li><b>1</b> <span>human, holding the switch</span></li>
     </ul>
 
     <figure class="map">
@@ -130,13 +130,14 @@
     <ol class="controls">
       <li>
         <h3>the alarm lives outside.</h3>
-        <p>a separate watchdog checks the assistant every few minutes. if it stops
-          answering, my phone rings. the assistant can't reach its own alarm.</p>
+        <p>a separate watchdog checks the assistant around the clock. if it stops
+          answering, my phone rings. the assistant is never handed the alarm's key,
+          and changing the alarm takes my password.</p>
       </li>
       <li>
         <h3>a hard spending brake.</h3>
         <p>one monthly cap, set where the bill is paid. when it's reached, everything
-          stops. it doesn't quietly keep charging.</p>
+          stops.</p>
       </li>
       <li>
         <h3>one kill switch.</h3>
@@ -155,7 +156,7 @@
       </li>
       <li>
         <h3>one phase at a time.</h3>
-        <p>each phase has to run clean for a week before the next one is switched on.
+        <p>each phase has to run clean for days before the next one is switched on.
           being built doesn't count.</p>
       </li>
     </ol>
@@ -165,10 +166,10 @@
     <h2 id="ph-h">where it stands</h2>
     <ol class="rail">
       <li class="on">
-        <span class="ph">phase 0 · live since oct 29</span>
+        <span class="ph">phase 0 · live since late october</span>
         <h3>guardrails</h3><span class="chip chip-live">LIVE</span>
         <p>watchdog, spending brake, kill switch. I tested the alarm the honest way:
-          stopped the assistant on purpose, and my phone rang.</p>
+          forced it red on purpose, and my phone rang.</p>
       </li>
       <li class="on">
         <span class="ph">phase 1 · live since nov 11</span>
@@ -201,8 +202,8 @@
         <h3>ideas + taste</h3><span class="chip">BUILT · OFF</span>
       </li>
     </ol>
-    <p class="rail-note">"built" means written and tested offline. none of it runs, and
-      known bugs get fixed, before a phase is switched on.</p>
+    <p class="rail-note">"built" means written and tested offline; none of it runs.
+      known bugs, and there are some, get fixed before a phase is switched on.</p>
   </section>
 
   <section class="a-section reveal" aria-labelledby="loop-h">
@@ -226,16 +227,16 @@
       </ol>
 
       <ol class="rounds">
-        <li><b>round 1</b><span>two independent reviewers found sixteen problems, four of them working attacks. a change could blind its own grader.</span></li>
-        <li><b>round 2</b><span>all sixteen fixed. a fresh attacker found nine more.</span></li>
-        <li><b>round 3 + 4</b><span>fixed, attacked again, fixed again. by the last round nobody could find a way to ship a change without my tap.</span></li>
+        <li><b>round 1</b> <span>two independent reviewers found sixteen problems, four of them working attacks. a change could blind its own grader.</span></li>
+        <li><b>round 2</b> <span>all sixteen fixed. a fresh attacker found nine more.</span></li>
+        <li><b>round 3 + 4</b> <span>fixed, attacked again, fixed again. in the last round neither reviewer found a way to merge a change without my tap. they still found gaps in how a bypass would be noticed.</span></li>
       </ol>
 
       <p><strong>so why is it still off?</strong> because "nobody found a way" isn't the
-        bar. two things need a real answer first, and a patch won't do:</p>
+        bar. two of the open problems need a real answer, and a patch won't do:</p>
       <ul class="blockers">
-        <li><b>513</b>of about 5,400 tests can't run inside the sealed test run, so the gate is blind to whatever only they cover.</li>
-        <li><b>count ≠ list</b>the pass check compares how many tests passed, not exactly which ones. that can be fooled.</li>
+        <li><b>513</b> of about 5,400 tests can't run inside the sealed test run, so the gate is blind to whatever only they cover.</li>
+        <li><b>count ≠ list</b> the pass check compares how many tests passed, not exactly which ones.</li>
       </ul>
     </div>
   </section>
@@ -247,7 +248,7 @@
         <h3>what it can't do without me</h3>
         <ul>
           <li>switch on its next phase.</li>
-          <li>change its own alarm, cap, or tests.</li>
+          <li>change its own alarm or cap.</li>
           <li>spend past the cap.</li>
           <li>ship a change to itself.</li>
         </ul>
@@ -255,8 +256,8 @@
       <div>
         <h3>how I'd catch it failing</h3>
         <ul>
-          <li>it goes quiet: my phone rings, within about half an hour.</li>
-          <li>its files change underneath it: the watchdog's check goes red.</li>
+          <li>it goes quiet: my phone rings, within a couple of hours.</li>
+          <li>its guardrails or settings change: the watchdog's check goes red.</li>
           <li>spend moves when I'm not using it: one command shows me.</li>
           <li>I don't believe a claim: I ask for the receipt.</li>
         </ul>
