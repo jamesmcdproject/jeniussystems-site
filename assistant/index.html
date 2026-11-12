@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Security: strict CSP via meta; zero JS, zero inline styles, fonts self-hosted.
+     The diagrams are inline SVG styled from /assets/assistant.css (no style attributes). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#eaf3ff">
+
+<title>personal assistant v2 · jeniussystems.ai</title>
+<meta name="description" content="Build notes for a personal AI assistant rebuilt controls-first: the alarm, the spending brake and the kill switch came before the features. Phase one is live; the rest is built and switched off until it earns its turn.">
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="jeniussystems.ai" />
+<meta property="og:title" content="personal assistant v2" />
+<meta property="og:description" content="an assistant I can vouch for: the alarm first, then the features. phase one live; the rest built and switched off." />
+<meta property="og:url" content="https://jeniussystems.ai/assistant/" />
+<meta property="og:image" content="https://jeniussystems.ai/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="personal assistant v2" />
+<meta name="twitter:description" content="an assistant I can vouch for: the alarm first, then the features. phase one live; the rest built and switched off." />
+<meta name="twitter:image" content="https://jeniussystems.ai/assets/og.png" />
+
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon.png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+<link rel="canonical" href="https://jeniussystems.ai/assistant/" />
+<link rel="preload" href="/assets/fonts/OpenDyslexic-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="stylesheet" href="/assets/hub.css">
+<link rel="stylesheet" href="/assets/assistant.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "personal assistant v2",
+  "url": "https://jeniussystems.ai/assistant/",
+  "dateModified": "2026-11-12",
+  "description": "Build notes for a self-hosted personal AI assistant rebuilt controls-first: an independent watchdog, a hard spending cap and a kill switch were live before any feature. Phase one (messaging, memory, lists) is live; later phases and a self-improvement loop are built and switched off.",
+  "author": { "@id": "https://jeniussystems.ai/#org" }
+}
+</script>
+</head>
+<body class="glass">
+
+<a class="skip" href="#notes">skip to content</a>
+
+<main class="page page-wide">
+
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/">← jeniussystems.ai</a></nav>
+
+  <header class="article-hero a-hero" id="notes">
+    <p class="meta">ON MY OWN TIME · PERSONAL ASSISTANT V2 <span class="chip chip-live">PHASE 1 LIVE</span></p>
+    <h1>an assistant I can vouch&nbsp;for.</h1>
+    <p class="lede">v1 was a fleet of agents behind a gateway. it went down, quietly, and
+      stayed down for weeks before I noticed. so v2 was built the other way
+      round: <strong>the alarm first, then the assistant.</strong> I don't need to know
+      how every part works. I need to know what it can't do without me, and how
+      I'd catch it failing.</p>
+
+    <ul class="facts" aria-label="Where it stands">
+      <li class="is-live"><b>nov 11</b> <span>phase one live</span></li>
+      <li><b>5,300+</b> <span>automated tests</span></li>
+      <li><b>2</b> <span>independent reviews per change</span></li>
+      <li><b>1</b> <span>human, holding the switch</span></li>
+    </ul>
+
+    <figure class="map">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="map-t map-d">
+        <title id="map-t">How the assistant is wired</title>
+        <desc id="map-d">My phone talks to the assistant, which reads and writes a versioned memory. A separate watchdog sits outside the fence around the assistant, checks it on a timer, and rings my phone if it goes quiet.</desc>
+
+        <!-- fence: everything the assistant can touch -->
+        <rect class="m-fence" x="170" y="62" width="292" height="150" rx="14"/>
+        <text class="m-note" x="184" y="200">what the assistant can touch</text>
+
+        <!-- wires -->
+        <path class="m-wire" d="M112 137 H196"/>
+        <path class="m-wire" d="M306 137 H336"/>
+        <path class="m-wire" d="M565 102 C565 14, 251 14, 251 102"/>
+        <path class="m-page" d="M565 172 C565 282, 66 282, 66 174"/>
+
+        <!-- moving pulses -->
+        <path class="m-flow" d="M112 137 H196"/>
+        <path class="m-flow m-flow-back" d="M306 137 H336"/>
+        <path class="m-probe" d="M565 102 C565 14, 251 14, 251 102"/>
+
+        <!-- nodes -->
+        <rect class="m-node" x="20" y="102" width="92" height="70" rx="12"/>
+        <text class="m-name" x="66" y="134">me</text>
+        <text class="m-sub" x="66" y="152">phone</text>
+
+        <rect class="m-node" x="196" y="102" width="110" height="70" rx="12"/>
+        <text class="m-name" x="251" y="134">assistant</text>
+        <text class="m-sub" x="251" y="152">one, not a fleet</text>
+
+        <rect class="m-node" x="336" y="102" width="104" height="70" rx="12"/>
+        <text class="m-name" x="388" y="134">memory</text>
+        <text class="m-sub" x="388" y="152">every edit kept</text>
+
+        <rect class="m-node-out" x="510" y="102" width="110" height="70" rx="12"/>
+        <text class="m-name" x="565" y="134">watchdog</text>
+        <text class="m-sub" x="565" y="152">outside the fence</text>
+        <circle class="m-halo" cx="606" cy="114" r="5"/>
+        <circle class="m-dot" cx="606" cy="114" r="3.5"/>
+
+        <!-- labels on the two watchdog lines -->
+        <text class="m-note m-note-live m-mid" x="408" y="22">are you alive? did anything change?</text>
+        <text class="m-note m-note-live m-mid" x="316" y="280">if it goes quiet, my phone rings</text>
+      </svg>
+      <figcaption>illustration · not live data</figcaption>
+    </figure>
+
+    <figure class="pulse" aria-hidden="true">
+      <svg viewBox="0 0 640 44" preserveAspectRatio="none">
+        <path class="p-base" d="M0 22 H640"/>
+        <path class="p-beat" d="M0 22 H120 L132 22 L140 8 L150 36 L158 22 H300 L312 22 L320 8 L330 36 L338 22 H480 L492 22 L500 8 L510 36 L518 22 H640"/>
+      </svg>
+    </figure>
+  </header>
+
+  <section class="a-section reveal" aria-labelledby="ctl-h">
+    <h2 id="ctl-h">the controls came first</h2>
+    <p class="section-note">I'm an accountant. I don't trust a process because it worked
+      yesterday; I trust it because of what's wrapped around it. these were running
+      before the assistant could do a single useful thing.</p>
+    <ol class="controls">
+      <li>
+        <h3>the alarm lives outside.</h3>
+        <p>a separate watchdog checks the assistant around the clock. if it stops
+          answering, my phone rings. the assistant is never handed the alarm's key,
+          and changing the alarm takes my password.</p>
+      </li>
+      <li>
+        <h3>a hard spending brake.</h3>
+        <p>one monthly cap, set where the bill is paid. when it's reached, everything
+          stops.</p>
+      </li>
+      <li>
+        <h3>one kill switch.</h3>
+        <p>a single stop that every risky action checks first. the assistant can't
+          switch it back on.</p>
+      </li>
+      <li>
+        <h3>it asks before it reaches out.</h3>
+        <p>money, deleting things, passwords, or sending anything to another person:
+          by design, none of it happens without a tap from me.</p>
+      </li>
+      <li>
+        <h3>two reviewers, strangers to each other.</h3>
+        <p>every change is reviewed twice, by reviewers that never see each other's
+          notes or the author's reasoning. I don't review code. that's the point.</p>
+      </li>
+      <li>
+        <h3>one phase at a time.</h3>
+        <p>each phase has to run clean for days before the next one is switched on.
+          being built doesn't count.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="a-section reveal" aria-labelledby="ph-h">
+    <h2 id="ph-h">where it stands</h2>
+    <ol class="rail">
+      <li class="on">
+        <span class="ph">phase 0 · live since late october</span>
+        <h3>guardrails</h3><span class="chip chip-live">LIVE</span>
+        <p>watchdog, spending brake, kill switch. I tested the alarm the honest way:
+          forced it red on purpose, and my phone rang.</p>
+      </li>
+      <li class="on">
+        <span class="ph">phase 1 · live since nov 11</span>
+        <h3>memory + lists</h3><span class="chip chip-live">LIVE</span>
+        <p>I message it from my phone. it remembers what I tell it and keeps my lists,
+          and every change to its memory is kept, so nothing is silently rewritten.</p>
+      </li>
+      <li class="off">
+        <span class="ph">phase 2</span>
+        <h3>email + a scout</h3><span class="chip">BUILT · OFF</span>
+      </li>
+      <li class="off">
+        <span class="ph">phase 3</span>
+        <h3>hands on the computer</h3><span class="chip">BUILT · OFF</span>
+      </li>
+      <li class="off">
+        <span class="ph">phase 4</span>
+        <h3>calendar + a morning brief</h3><span class="chip">BUILT · OFF</span>
+      </li>
+      <li class="off">
+        <span class="ph">phase 5</span>
+        <h3>health</h3><span class="chip">BUILT · OFF</span>
+      </li>
+      <li class="off">
+        <span class="ph">phase 6</span>
+        <h3>money</h3><span class="chip">BUILT · OFF</span>
+      </li>
+      <li class="off">
+        <span class="ph">phase 7</span>
+        <h3>ideas + taste</h3><span class="chip">BUILT · OFF</span>
+      </li>
+    </ol>
+    <p class="rail-note">"built" means written and tested offline; none of it runs.
+      known bugs, and there are some, get fixed before a phase is switched on.</p>
+  </section>
+
+  <section class="a-section reveal" aria-labelledby="loop-h">
+    <h2 id="loop-h">the part that improves itself</h2>
+    <div class="loop">
+      <div class="loop-head">
+        <h3>merged, and switched off on&nbsp;purpose.</h3>
+        <span class="switch" role="img" aria-label="switched off"><i></i>off</span>
+      </div>
+      <p>the plan is for the assistant to propose its own fixes, build them, test them,
+        and ship the safe ones. the code for that exists. it does not run.</p>
+
+      <ol class="steps" aria-label="How a self-made change would travel">
+        <li>proposal</li>
+        <li>builder</li>
+        <li>sealed test run</li>
+        <li>risk class</li>
+        <li>reviewer</li>
+        <li class="tap">my tap</li>
+        <li>merge</li>
+      </ol>
+
+      <ol class="rounds">
+        <li><b>round 1</b> <span>two independent reviewers found sixteen problems, four of them working attacks. a change could blind its own grader.</span></li>
+        <li><b>round 2</b> <span>all sixteen fixed. a fresh attacker found nine more.</span></li>
+        <li><b>round 3 + 4</b> <span>fixed, attacked again, fixed again. in the last round neither reviewer found a way to merge a change without my tap. they still found gaps in how a bypass would be noticed.</span></li>
+      </ol>
+
+      <p><strong>so why is it still off?</strong> because "nobody found a way" isn't the
+        bar. two of the open problems need a real answer, and a patch won't do:</p>
+      <ul class="blockers">
+        <li><b>513</b> of about 5,400 tests can't run inside the sealed test run, so the gate is blind to whatever only they cover.</li>
+        <li><b>count ≠ list</b> the pass check compares how many tests passed, not exactly which ones.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="a-section reveal" aria-labelledby="v-h">
+    <h2 id="v-h">what I can say without reading the code</h2>
+    <div class="vouch">
+      <div>
+        <h3>what it can't do without me</h3>
+        <ul>
+          <li>switch on its next phase.</li>
+          <li>change its own alarm or cap.</li>
+          <li>spend past the cap.</li>
+          <li>ship a change to itself.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>how I'd catch it failing</h3>
+        <ul>
+          <li>it goes quiet: my phone rings, within a couple of hours.</li>
+          <li>its guardrails or settings change: the watchdog's check goes red.</li>
+          <li>spend moves when I'm not using it: one command shows me.</li>
+          <li>I don't believe a claim: I ask for the receipt.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="asof">as of nov 12, 2026 · updated when a phase changes state</p>
+  </section>
+
+  <div class="notice">
+    <strong>private by design:</strong> it runs on one computer at home and talks only
+    to me. there's nothing here to log into, and nothing for sale.
+  </div>
+
+  <footer class="foot">
+    <a href="/">← back to jeniussystems.ai</a><br>
+    <!-- "lable" is INTENTIONAL (James, 2026-08-14) — do not "fix" it -->
+    every status lable is honest · © 2026 jenius systems
+  </footer>
+
+</main>
+
+</body>
+</html>

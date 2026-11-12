@@ -9,6 +9,7 @@ main deploys). No build step — every file here is served as-is.
 | --- | --- |
 | `/` (`index.html` + `assets/hub.css`) | Landing page: OpenDyslexic wordmark + statement, then three sections — "the day-to-day, automated" (finance builds), "how I build" (method), "on my own time" (the fleet + games). Zero JS. |
 | `/construction/` | construction draw management — case notes (app at construction.jeniussystems.ai, behind Cloudflare Access; login link only). |
+| `/assistant/` (`assistant/index.html` + `assets/assistant.css`) | personal assistant v2 — build notes. Zero JS; diagrams are inline SVG animated from CSS (illustrations, never live data). Update the phase rail and the "as of" date when a phase changes state; revise the "why is it still off" box before the self-improvement loop is ever switched on. |
 | `/sandbox/` | The fleet architecture overview (the pre-2026-08 site; body untouched, head/nav adapted — its pinned inline-script hash is byte-identical). |
 | `/data/fleet.json` | **Contract path** — written by a private roster-sync pipeline that lives outside this repo. Must stay at the repo root; `/sandbox/` fetches it absolutely. |
 | `404.html`, `robots.txt`, `sitemap.xml`, `llms.txt` | Root meta files. |
