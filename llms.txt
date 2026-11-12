@@ -19,9 +19,13 @@ Everything listed is real; anything private, in build, or in-rebuild is labeled 
 
 ## On my own time (side projects)
 
+- [personal assistant v2 — build notes](https://jeniussystems.ai/assistant/): the rebuild of the
+  personal assistant, controls-first: an independent watchdog, a hard spending cap and a kill switch
+  were live before any feature. Phase one (messaging, memory, lists) is live and private; later
+  phases and a self-improvement loop are built and switched off.
 - [The Fleet v1 — architecture sandbox](https://jeniussystems.ai/sandbox/): a sanitized architecture
   overview of the studio's self-hosted fleet of AI agents (mail, health, calendar, concierge and
-  more) behind one hardened gateway; v2 is in the works.
+  more) behind one hardened gateway; superseded by v2 above.
 - [couch critters](https://games.jeniussystems.ai/): a co-op party platformer inspired by TeamO's
   PICO PARK, played on one shared screen with phones as gamepads (join by QR code). Live and free to play.
 - [kart rush](https://kart.jeniussystems.ai/): a living-room kart racer; the TV runs the race and
