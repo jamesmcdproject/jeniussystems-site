@@ -14,7 +14,7 @@ Everything listed is real; anything private, in build, or in-rebuild is labeled 
   for a real-estate investment firm's construction team, self-hosted on hardware the firm controls.
   Private pilot; logins not available.
 - accounting close (in build, no public page): automation and tracking for the accounting close.
-- SALT exposure (in build, no public page): a state and local tax app that quantifies the tax
+- SALT portfolio management (in build, no public page): a state and local tax app that quantifies the tax
   exposure for an entire portfolio, organizes the data behind it, and guides how to manage it.
 
 ## On my own time (side projects)
