@@ -15,13 +15,13 @@ Everything listed is real; anything private, in build, or in-rebuild is labeled 
   Private pilot; logins not available.
 - accounting close (in build, no public page): automation and tracking for the accounting close.
 - SALT exposure (in build, no public page): a state and local tax app that quantifies the tax
-  exposure for an entire portfolio, organizes the data behind it, and guides how to reduce it.
-- [The Fleet — architecture sandbox](https://jeniussystems.ai/sandbox/): a sanitized architecture
+  exposure for an entire portfolio, organizes the data behind it, and guides how to manage it.
+
+## On my own time (side projects)
+
+- [The Fleet v1 — architecture sandbox](https://jeniussystems.ai/sandbox/): a sanitized architecture
   overview of the studio's self-hosted fleet of AI agents (mail, health, calendar, concierge and
-  more) behind one hardened gateway; the fleet is currently being rebuilt for its second iteration.
-
-## Off the clock (games)
-
+  more) behind one hardened gateway; v2 is in the works.
 - [couch critters](https://games.jeniussystems.ai/): a co-op party platformer inspired by TeamO's
   PICO PARK, played on one shared screen with phones as gamepads (join by QR code). Live and free to play.
 - [kart rush](https://kart.jeniussystems.ai/): a living-room kart racer; the TV runs the race and
